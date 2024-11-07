@@ -1,12 +1,5 @@
 import java.util.*;
 
-enum Role {
-    PATIENT,
-    DOCTOR,
-    PHARMACIST,
-    ADMIN
-}
-
 public class Main {
     public static void main(String[] args){
 
