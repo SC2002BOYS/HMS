@@ -1,13 +1,13 @@
 public class AuthenticationController implements  Authentication{
 
     //attributes
-    private User model;
+    private User user;
     private LoginMenu view;
 
     //public constructor
     public AuthenticationController(User model, LoginMenu view)
     {
-        this.model=model;
+        this.user=model;
         this.view=view;
     }
     //methods
@@ -15,8 +15,8 @@ public class AuthenticationController implements  Authentication{
     //@override the method
     public boolean toLogin(String userID, String userPass)
     {
-        userID=model.getUserID();
-        userPass=model.getUserPass();
+        userID=user.getUserID();
+        userPass=user.getUserPass();
 
 
 
