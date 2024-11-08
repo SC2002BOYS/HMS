@@ -1,7 +1,7 @@
 import java.time.LocalDate;
 import java.util.*;
 
-public class Patient extends User{
+public class MedicalRecord{
 
     private String patientID;
     private String name;
@@ -67,9 +67,8 @@ public class Patient extends User{
         this.pastDiagnosis = pastDiagnosis;
     }
 
-    public Patient(String userID, String userPass, Role role, String patientID, String name, LocalDate dateOfBirth,
+    public MedicalRecord(String patientID, String name, LocalDate dateOfBirth,
                    Gender gender, int contactInfo, BloodType bloodType, List<String> pastDiagnosis) {
-        super(userID, userPass, role);  // Calls the User constructor
         this.patientID = patientID;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
