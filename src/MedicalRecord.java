@@ -10,6 +10,7 @@ public class MedicalRecord{
     private int contactInfo;
     private BloodType bloodType;
     private List<String> pastDiagnosis;
+    private String email;
 
     public String getPatientID(){
         return this.patientID;
@@ -67,8 +68,12 @@ public class MedicalRecord{
         this.pastDiagnosis = pastDiagnosis;
     }
 
+    public void getEmail(){return this.email};
+
+    public void setEmail(String email){this.email= email};
+
     public MedicalRecord(String patientID, String name, LocalDate dateOfBirth,
-                   Gender gender, int contactInfo, BloodType bloodType, List<String> pastDiagnosis) {
+                   Gender gender, int contactInfo, BloodType bloodType, List<String> pastDiagnosis, String email) {
         this.patientID = patientID;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -76,5 +81,6 @@ public class MedicalRecord{
         this.contactInfo = contactInfo;
         this.bloodType = bloodType;
         this.pastDiagnosis = pastDiagnosis;
+        this.email = email;
     }
 }
