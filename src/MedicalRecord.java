@@ -68,9 +68,9 @@ public class MedicalRecord{
         this.pastDiagnosis = pastDiagnosis;
     }
 
-    public void getEmail(){return this.email};
+    public String getEmail(){return this.email;};
 
-    public void setEmail(String email){this.email= email};
+    public void setEmail(String email){this.email= email;};
 
     public MedicalRecord(String patientID, String name, LocalDate dateOfBirth,
                    Gender gender, int contactInfo, BloodType bloodType, List<String> pastDiagnosis, String email) {
