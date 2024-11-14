@@ -8,5 +8,5 @@ Objective:
   ● to gain familiarity with using Java as an object oriented programming language.
   ● to work collaboratively as a group to achieve a common goal.
 
-In this project we are implementing an application aimed at automating the management of hospital operations, including patient management, appointment scheduling, staff management, and billing. 
+In this project we are implementing an application aimed at automating the management of hospital operations, including patient management, appointment scheduling, and staff management. 
 The system is expected to facilitate efficient management of hospital resources, enhance patient care, and streamline administrative processes.
