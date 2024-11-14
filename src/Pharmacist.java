@@ -10,13 +10,18 @@ public class Pharmacist extends User implements UserActions{
         this.requests = requests;
     }
 
+    public Pharmacist(){
+        this.inventory = null;
+        this.requests = null;
+    }
+
     public void printMenu(){
         this.menu.printMenu();
     }
 
     public void runModule(int choice){
         switch(choice){
-            case 1:
+            case 1: AllViewAppointmentOutcome.staffViewAppointmentOutcome();
         }
     }
 

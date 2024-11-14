@@ -45,6 +45,17 @@ public class Main {
             } else {
                 System.out.println("Invalid username or password. Please try again.");
             }
+
+            switch(role){
+
+                case PHARMACIST:
+                    Pharmacist pharmacist = new Pharmacist();
+                    pharmacist.printMenu();
+                    int choice = sc.nextInt();
+                    pharmacist.runModule(choice);
+
+
+            }
         }
     }
 }

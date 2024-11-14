@@ -9,6 +9,7 @@ import java.util.List;
 
 public class CSVReader {
 
+    // CSV reader for Patient Medical Record
     public static MedicalRecord findMedicalRecordByPatientID(String filePath, String patientID) {
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -37,6 +38,7 @@ public class CSVReader {
         return null; // If no matching patientID found
     }
 
+    // CSV reader for Appointments
     public static ArrayList<Appointment> getAppointments(String filePath, String patientID) {
         ArrayList<Appointment> appointments = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -60,6 +62,7 @@ public class CSVReader {
         return appointments;
     }
 
+    // CSV reader for Appointment Outcome Records
     public static ArrayList<AppointmentOutcomeRecord> getAppointmentOutcomeRecords(String filePath, String patientID) {
         ArrayList<AppointmentOutcomeRecord> records = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -88,5 +91,25 @@ public class CSVReader {
             e.printStackTrace();
         }
         return records;
+    }
+
+    public static String getPassword(String filePath, String patientID){
+
+        String line;
+        String delimiter = ",";
+        String storedUserPass = "";
+
+        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
+            while((line=br.readLine()) != null){
+
+                String[] userCred = line.split(delimiter);
+                String storedUserID = userCred[0];
+                storedUserPass = userCred[1];
+
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return storedUserPass;
     }
 }
