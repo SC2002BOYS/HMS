@@ -1,28 +1,23 @@
 import java.util.ArrayList;
 
-public class Pharmacist extends User{
-    private ArrayList<Patient> patients;
+public class Pharmacist extends User implements UserActions{
     private Inventory inventory;
     private ArrayList<Request> requests;
-    private PharmacistMenu menu;
+    private final PharmacistMenu menu = new PharmacistMenu();
 
-    public Pharmacist(ArrayList<Patient> patients,Inventory inventory,ArrayList<Request> requests,PharmacistMenu menu){
-        this.patients = patients;
+    public Pharmacist(Inventory inventory,ArrayList<Request> requests){
         this.inventory = inventory;
         this.requests = requests;
-        this.menu = menu;
     }
 
-    public void PrintMenu(){
+    public void printMenu(){
         this.menu.printMenu();
     }
 
-    public void setPatients(ArrayList<Patient> patients){
-        this.patients = patients;
-    }
-
-    public ArrayList<Patient> getPatients(){
-        return this.patients;
+    public void runModule(int choice){
+        switch(choice){
+            case 1:
+        }
     }
 
     public void setInventory(Inventory inventory){
