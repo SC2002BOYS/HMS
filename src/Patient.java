@@ -6,17 +6,16 @@ public class Patient extends User {
     private MedicalRecord medicalRecord;
     private ArrayList<AppointmentOutcomeRecord> appointmentOutcomeRecords;
     private ArrayList<Appointment> appointments;
-    private PatientMenu menu;
+    private final PatientMenu menu = new PatientMenu();
 
 
 
     //constructor
-    public Patient(String userID,String userPass, Role role, MedicalRecord medicalRecord, ArrayList<AppointmentOutcomeRecord> appointmentOutcomeRecords, ArrayList<Appointment> appointments, PatientMenu menu){
+    public Patient(String userID,String userPass, Role role, MedicalRecord medicalRecord, ArrayList<AppointmentOutcomeRecord> appointmentOutcomeRecords, ArrayList<Appointment> appointments){
         super(userID, userPass, role);
         this.medicalRecord = medicalRecord;
         this.appointmentOutcomeRecords = appointmentOutcomeRecords;
         this.appointments = appointments;
-        this.menu = menu;
     }
 
     //to print the patient menu
