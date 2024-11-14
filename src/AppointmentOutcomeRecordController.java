@@ -23,7 +23,7 @@ public class AppointmentOutcomeRecordController {
         model.setDate(date);
     }
 
-    public void EditAppointmentOutcomeRecordServiceProvided(AppointmentOutcomeRecord.ServiceType serviceProvided) {
+    public void EditAppointmentOutcomeRecordServiceProvided(ServiceType serviceProvided) {
         model.setServiceProvided(serviceProvided);
     }
 

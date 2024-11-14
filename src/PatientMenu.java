@@ -10,7 +10,10 @@ public class PatientMenu implements Menu {
         System.out.println("5. Cancel an appointment");
         System.out.println("6. View scheduled appointments");
         System.out.println("7. View past appointment outcome record");
-        System.out.println("8. Log out");
+        System.out.println("8. Change password");
+        System.out.println("9. Log out");
+        System.out.println("Please enter option:");
+
     }
 
 }
