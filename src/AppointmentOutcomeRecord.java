@@ -3,11 +3,6 @@ import java.time.LocalDate;
 
 public class AppointmentOutcomeRecord implements IAppointmentOutcomeRecord {
     
-    // Enum for service types used locally
-    public enum ServiceType {
-        CONSULTATION, XRAY, BLOOD_TEST, THERAPY
-    }
-    
     // Attributes 
     private LocalDate date;
     private ServiceType serviceProvided;  // Use enum for service type
