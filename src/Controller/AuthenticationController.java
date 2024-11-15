@@ -5,14 +5,8 @@ import View.LoginMenu;
 public class AuthenticationController implements  Authentication{
 
     //attributes
-    public LoginMenu view;
+    public final LoginMenu view = new LoginMenu();
 
-    //public constructor
-    public AuthenticationController(LoginMenu view)
-    {
-        this.view=view;
-    }
-    //methods
 
     //@override the method
     public boolean toLogin(String userID, String userPass) {

@@ -1,5 +1,6 @@
 package Model;
 import java.util.ArrayList;
+import Controller.CSVReader;
 import View.PatientMenu;
 import Type.Role;
 
@@ -11,14 +12,12 @@ public class Patient extends User {
     private ArrayList<Appointment> appointments;
     private final PatientMenu menu = new PatientMenu();
 
-
-
     //constructor
-    public Patient(String userID,String userPass, Role role, MedicalRecord medicalRecord, ArrayList<AppointmentOutcomeRecord> appointmentOutcomeRecords, ArrayList<Appointment> appointments){
+    public Patient(String userID,String userPass, Role role){
         super(userID, userPass, role);
-        this.medicalRecord = medicalRecord;
-        this.appointmentOutcomeRecords = appointmentOutcomeRecords;
-        this.appointments = appointments;
+        this.medicalRecord = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", userID);
+        this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("External Data/AppointmentOutcomeRecord.csv", userID);
+        this.appointments = CSVReader.getAppointments("External Data/Appointments.csv", userID);
     }
 
     //to print the patient menu
