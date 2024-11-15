@@ -15,11 +15,11 @@ public class AllViewAppointmentOutcome {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter PatientID:");
         String patientID = sc.next();
-        Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID),
+        Patient patient = new Patient(patientID, CSVReader.getPassword("HMS/External Data/Users.csv", patientID),
                     Role.PATIENT,
-                    CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", patientID),
-                    CSVReader.getAppointmentOutcomeRecords("External Data/AppointmentOutcomeRecord.csv", patientID),
-                    CSVReader.getAppointments("External Data/Appointments.csv", patientID));
+                    CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", patientID),
+                    CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", patientID),
+                    CSVReader.getAppointments("HMS/External Data/Appointments.csv", patientID));
 
         List<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
 

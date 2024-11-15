@@ -1,11 +1,14 @@
+import java.io.FileNotFoundException;
 import java.util.*;
 import Controller.AuthenticationController;
+import Controller.PasswordController;
 import Model.Pharmacist;
+import Model.Patient;
 import Model.User;
 import Type.Role;
 import View.LoginMenu;
 
-public class Main {
+public class Main{
     public static void main(String[] args){
 
         Scanner sc = new Scanner(System.in);
@@ -50,16 +53,22 @@ public class Main {
             } else {
                 System.out.println("Invalid username or password. Please try again.");
             }
-
-            switch(role){
-
-                case PHARMACIST:
-                    Pharmacist pharmacist = new Pharmacist();
-                    pharmacist.printMenu();
-                    int choice = sc.nextInt();
-                    pharmacist.runModule(choice);
-
-
+            if(loggedIn){
+                switch(role){
+                    case PHARMACIST:
+                        Pharmacist pharmacist = new Pharmacist();
+                        pharmacist.printMenu();
+                        int choice = sc.nextInt();
+                        pharmacist.runModule(choice);
+                        break;
+                    case PATIENT:
+                        PasswordController passControl = new PasswordController();
+                        Patient patient = new Patient(userID, userPass, role, null, null, null, passControl);
+                        patient.printMenu();
+                        int c = sc.nextInt();
+                        patient.runModule(c);
+                        break;
+                }
             }
         }
     }
