@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args){
 
         Scanner sc = new Scanner(System.in);
-        AuthenticationController authController = new AuthenticationController(new LoginMenu());
+        AuthenticationController authController = new AuthenticationController();
 
         authController.view.printMenu();
         System.out.println("Enter your choice: ");
