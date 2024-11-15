@@ -1,3 +1,10 @@
+import Controller.CSVReader;
+import Controller.IUpdate;
+import Controller.PatientUpdate;
+import Controller.UpdateController;
+import Model.Patient;
+import Type.Role;
+
 public class PatientUpdateTest {
     public static void main(String[] args) {
         Patient patient = new Patient("JohnDoe", "password123", Role.PATIENT,
