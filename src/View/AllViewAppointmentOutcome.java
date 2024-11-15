@@ -19,7 +19,7 @@ public class AllViewAppointmentOutcome {
                     Role.PATIENT,
                     CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", patientID),
                     CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", patientID),
-                    CSVReader.getAppointments("HMS/External Data/Appointments.csv", patientID));
+                    CSVReader.getAppointments("HMS/External Data/Appointments.csv", patientID), null);
 
         List<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
 
