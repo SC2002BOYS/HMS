@@ -1,6 +1,7 @@
 import Controller.*;
 import Model.Patient;
 import Type.Role;
+import View.ViewMedicalRecord;
 
 public class PatientUpdateTest {
     public static void main(String[] args) {
@@ -17,5 +18,7 @@ public class PatientUpdateTest {
         updateController.update(docUpdate, patient.getMedicalRecord());
         System.out.println(patient.getMedicalRecord().getPastDiagnosis());
         System.out.println(patient.getMedicalRecord().getEmail());
+        ViewMedicalRecord viewMedicalRecord = new ViewMedicalRecord();
+        viewMedicalRecord.displayRecord(patient.getMedicalRecord());
     }
 }
