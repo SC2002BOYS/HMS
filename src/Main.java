@@ -1,5 +1,9 @@
 import java.util.*;
 import Controller.AuthenticationController;
+import Model.Pharmacist;
+import Model.User;
+import Type.Role;
+import View.LoginMenu;
 
 public class Main {
     public static void main(String[] args){
