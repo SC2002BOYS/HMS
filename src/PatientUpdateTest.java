@@ -1,7 +1,4 @@
-import Controller.CSVReader;
-import Controller.IUpdate;
-import Controller.PatientUpdate;
-import Controller.UpdateController;
+import Controller.*;
 import Model.Patient;
 import Type.Role;
 
@@ -13,5 +10,7 @@ public class PatientUpdateTest {
         UpdateController updateController = new UpdateController();
         IUpdate patientUpdate = new PatientUpdate("ScHuiCallByReference@gmail.com", 898231321);
         updateController.update(patientUpdate, patient.getMedicalRecord());
+        IUpdate docUpdate = new DocUpdate("asthma");
+        updateController.update(docUpdate, patient.getMedicalRecord());
     }
 }
