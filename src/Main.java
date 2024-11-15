@@ -1,4 +1,9 @@
 import java.util.*;
+import Controller.AuthenticationController;
+import Model.Pharmacist;
+import Model.User;
+import Type.Role;
+import View.LoginMenu;
 
 public class Main {
     public static void main(String[] args){
@@ -44,6 +49,17 @@ public class Main {
 
             } else {
                 System.out.println("Invalid username or password. Please try again.");
+            }
+
+            switch(role){
+
+                case PHARMACIST:
+                    Pharmacist pharmacist = new Pharmacist();
+                    pharmacist.printMenu();
+                    int choice = sc.nextInt();
+                    pharmacist.runModule(choice);
+
+
             }
         }
     }
