@@ -4,7 +4,7 @@ public class PatientUpdateTest {
                 CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", "JohnDoe"), CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", "JohnDoe"),
                 CSVReader.getAppointments("HMS/External Data/Appointments.csv", "JohnDoe"));
         UpdateController updateController = new UpdateController();
-        IUpdate patientUpdate = new PatientUpdate("ScHui@gmail.com", 999000111);
+        IUpdate patientUpdate = new PatientUpdate("ScHuiCallByReference@gmail.com", 898231321);
         updateController.update(patientUpdate, patient.getMedicalRecord());
     }
 }
