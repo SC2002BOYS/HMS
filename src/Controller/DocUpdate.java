@@ -16,6 +16,9 @@ public class DocUpdate implements IUpdate{
     }
 
     public void perform(MedicalRecord record){
+        List<String> updatedDiagnosisList = new ArrayList<>(record.getPastDiagnosis());
+        updatedDiagnosisList.add(this.newDiagnosis);
+        record.setPastDiagnosis(updatedDiagnosisList);
         saveUpdatedRecord(record);
     }
 
