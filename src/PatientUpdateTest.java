@@ -3,6 +3,7 @@ import Model.AppointmentOutcomeRecord;
 import Model.Inventory;
 import Model.Patient;
 import Type.Role;
+import View.ViewInventory;
 import View.ViewMedicalRecord;
 
 import java.util.ArrayList;
@@ -33,5 +34,7 @@ public class PatientUpdateTest {
         AppointmentOutcomeRecord firstRecord = records.getFirst();
         updater.perform(firstRecord);
         inventory.getMedicationCount();
+        ViewInventory viewInventory = new ViewInventory();
+        viewInventory.displayInventory();
     }
 }
