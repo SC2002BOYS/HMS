@@ -1,5 +1,4 @@
 package Controller;
-
 import java.util.*;
 import Model.AppointmentOutcomeRecord;
 import Model.Patient;
@@ -9,18 +8,14 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class EditMedStatus {
-
+public class PrescriptionServiceHandler implements PrescriptionHandler{
     private static final String CSV_FILE_PATH = "External Data/AppointmentOutcomeRecord.csv";
 
-    public static void dispenseMed(Patient patient, LocalDate date) {
-        // Get the list of appointment outcome records
+    @Override
+    public void dispenseMedication(Patient patient, LocalDate date) {
         ArrayList<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
-
-        // Flag to track if any records were updated
         boolean isUpdated = false;
 
-        // Iterate over records and update prescription statuses for the given date
         for (AppointmentOutcomeRecord record : outcomeRecords) {
             if (record.getDate().equals(date)) {
                 List<PrescriptionStatus> statuses = record.getPrescriptionStatus();
@@ -36,16 +31,32 @@ public class EditMedStatus {
         }
 
         if (isUpdated) {
-            // Persist changes to the CSV file, including PatientID
             writeToCsv(patient.getUserID(), outcomeRecords);
-            System.out.println("Prescription statuses updated successfully.");
+            System.out.println("Prescriptions dispensed and updated.");
+            System.out.println();
         } else {
             System.out.println("No records found for the specified date.");
         }
     }
 
-    // Method to write updated records to the CSV file
-    private static void writeToCsv(String patientID, ArrayList<AppointmentOutcomeRecord> outcomeRecords) {
+    @Override
+    public void viewPatientRecords(Patient patient) {
+        if (patient.getAppointmentOutcomeRecords().isEmpty()) {
+            System.out.println("No appointment outcome records found.");
+        } else {
+            patient.getAppointmentOutcomeRecords().forEach(record -> {
+                System.out.println("Date: " + record.getDate());
+                System.out.println("Service: " + record.getServiceProvided());
+                System.out.println("Prescriptions: " + record.getPrescriptions());
+                System.out.println("Prescription Status: " + record.getPrescriptionStatus());
+                System.out.println("Notes: " + record.getConsultationNotes());
+                System.out.println("----------------------------");
+                System.out.println();
+            });
+        }
+    }
+
+    private void writeToCsv(String patientID, ArrayList<AppointmentOutcomeRecord> outcomeRecords) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
             for (AppointmentOutcomeRecord record : outcomeRecords) {
                 // Convert the AppointmentOutcomeRecord object to a CSV line
