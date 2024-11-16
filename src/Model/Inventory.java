@@ -21,8 +21,8 @@ public class Inventory {
         return this.medicationName;
     }
 
-    public void setMedicationCount(ArrayList<String> medicationName){
-        this.medicationName = medicationName;
+    public void setMedicationCount(ArrayList<Integer> medicationCount){
+        this.medicationCount = medicationCount;
     }
 
     public ArrayList<Integer> getMedicationCount(){

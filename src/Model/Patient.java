@@ -15,9 +15,9 @@ public class Patient extends User {
     //constructor
     public Patient(String userID,String userPass, Role role){
         super(userID, userPass, role);
-        this.medicalRecord = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", userID);
-        this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("External Data/AppointmentOutcomeRecord.csv", userID);
-        this.appointments = CSVReader.getAppointments("External Data/Appointments.csv", userID);
+        this.medicalRecord = CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", userID);
+        this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", userID);
+        this.appointments = CSVReader.getAppointments("HMS/External Data/Appointments.csv", userID);
     }
 
     //to print the patient menu
