@@ -1,11 +1,14 @@
 package Model;
 import Type.Role;
+import Type.Gender;
 
 public class User{
 
     private String userID;
     private String userPass;
     private Role role;
+    private Gender gender;
+    private String age;
 
     public User(){
         this.userID = "";
@@ -13,10 +16,13 @@ public class User{
         this.role = null;
     }
 
-    public User(String userID, String userPass, Role role){
+    public User(String userID, String userPass, Role role, Gender gender, String age){
         this.userID = userID;
         this.userPass = userPass;
         this.role = role;
+        this.gender=gender;
+        this.age=age;
+           
     }
 
     public String getUserID(){
@@ -41,5 +47,25 @@ public class User{
 
     public void setRole(Role role){
         this.role = role;
+    }
+
+    public void setGender(Gender gender)
+    {
+        this.gender=gender;
+    }
+
+    public Gender getGender(Gender gender)
+    {
+        return this.gender;
+    }
+
+    public void setAge(String age)
+    {
+        this.age=age;
+    }
+
+    public String getAge(String age)
+    {
+        return this.age;
     }
 }

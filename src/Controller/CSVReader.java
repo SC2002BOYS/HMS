@@ -17,6 +17,7 @@ import Type.ServiceType;
 import Type.PrescriptionStatus;
 
 
+
 public class CSVReader {
 
     // CSV reader for Patient Medical Record
@@ -122,4 +123,49 @@ public class CSVReader {
         }
         return storedUserPass;
     }
+
+    public static Gender getGender(String filePath, String patientID){
+
+        String line;
+        String delimiter = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
+                String[] userCred = line.split(delimiter);
+                String storedUserID = userCred[0];
+                String genderString = userCred[3];
+
+                if (storedUserID.equals(patientID)) {
+                    return Gender.valueOf(genderString.toUpperCase());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if the patient ID is not found
+    }
+
+    public static String getAge(String filePath, String patientID){
+
+        String line;
+        String delimiter = ",";
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
+                String[] userCred = line.split(delimiter);
+                String storedUserID = userCred[0];
+                String ageString = userCred[4]; // Assuming age is the 5th column
+
+                if (storedUserID.equals(patientID)) {
+                    return ageString;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null; // Return null if the patient ID is not found
+    }
+
+
+
 }
