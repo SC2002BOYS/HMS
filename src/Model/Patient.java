@@ -2,6 +2,7 @@ package Model;
 import java.util.ArrayList;
 import Controller.CSVReader;
 import View.PatientMenu;
+import Type.Gender;
 import Type.Role;
 
 public class Patient extends User {
@@ -13,8 +14,8 @@ public class Patient extends User {
     private final PatientMenu menu = new PatientMenu();
 
     //constructor
-    public Patient(String userID,String userPass, Role role){
-        super(userID, userPass, role);
+    public Patient(String userID, String userPass, Role role, Gender gender, String age){
+        super(userID, userPass, role, gender, age);
         this.medicalRecord = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", userID);
         this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("External Data/AppointmentOutcomeRecord.csv", userID);
         this.appointments = CSVReader.getAppointments("External Data/Appointments.csv", userID);
