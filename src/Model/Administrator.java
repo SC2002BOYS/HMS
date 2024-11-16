@@ -60,11 +60,11 @@ public class Administrator extends User{
             case 2: AppointmentController appointmentController = new AppointmentController();
                     appointmentController.viewAppointmentsDetails();
                     break;
-            
+            /*
             case 3 : InventoryController inventoryController = new InventoryController();
                     inventoryController.updateMedicationStockLevel("medicationId", 10);
                     break;
-
+            */
             case 4: ReplenishmentController replenishmentController = new ReplenishmentController();
                     replenishmentController.approveReplenishmentRequest("requestId");
                     break;
