@@ -5,9 +5,7 @@ import View.ViewMedicalRecord;
 
 public class PatientUpdateTest {
     public static void main(String[] args) {
-        Patient patient = new Patient("JohnDoe", "password123", Role.PATIENT,
-                CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", "JohnDoe"), CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", "JohnDoe"),
-                CSVReader.getAppointments("HMS/External Data/Appointments.csv", "JohnDoe"));
+        Patient patient = new Patient("JohnDoe", "password123", Role.PATIENT);
 
         System.out.println(patient.getMedicalRecord().getPastDiagnosis());
         System.out.println(patient.getMedicalRecord().getEmail());
