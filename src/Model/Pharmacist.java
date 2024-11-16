@@ -4,19 +4,19 @@ import Type.Role;
 import java.util.*;
 
 
-public class NewPharmacist extends User{
+public class Pharmacist extends User{
     private Inventory inventory;
     private ArrayList<Request> requests;
     private final MenuHandler menuHandler;
 
-    public NewPharmacist(String userID, String password, MenuHandler menuHandler) {
+    public Pharmacist(String userID, String password, MenuHandler menuHandler) {
         super(userID, password, Role.PHARMACIST);
         this.inventory = new Inventory(); // Example initialization
         this.requests = new ArrayList<>(); // Example initialization
         this.menuHandler = menuHandler;
     }
 
-    public NewPharmacist(MenuHandler menuHandler) {
+    public Pharmacist(MenuHandler menuHandler) {
         this.menuHandler = menuHandler;
         this.inventory = null;
         this.requests = null;

@@ -1,7 +1,7 @@
 import java.util.*;
 
 import Controller.*;
-import Model.NewPharmacist;
+import Model.Pharmacist;
 import Model.User;
 import Type.Role;
 
@@ -57,7 +57,7 @@ public class Main {
                 case PHARMACIST:
                     PrescriptionHandler prescriptionService = new PrescriptionServiceHandler();
                     MenuHandler pharmacistMenuHandler = new PharmacistMenuHandler(prescriptionService);
-                    NewPharmacist pharmacist = new NewPharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), pharmacistMenuHandler);
+                    Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), pharmacistMenuHandler);
                     pharmacist.runModule();
 
 

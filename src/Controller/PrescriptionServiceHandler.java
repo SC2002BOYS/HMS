@@ -13,21 +13,25 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
 
     @Override
     public void dispenseMedication(Patient patient, LocalDate date) {
-        List<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
+        ArrayList<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
         boolean isUpdated = false;
 
         for (AppointmentOutcomeRecord record : outcomeRecords) {
             if (record.getDate().equals(date)) {
-                record.getPrescriptionStatus().replaceAll(status -> PrescriptionStatus.DISPENSED);
-                record.getPrescriptions().forEach(prescription ->
-                        System.out.println(prescription + " dispensed.")
-                );
+                List<PrescriptionStatus> statuses = record.getPrescriptionStatus();
+                // Update all statuses to DISPENSED
+                statuses.replaceAll(ignored -> PrescriptionStatus.DISPENSED);
+                List<String> prescriptions = record.getPrescriptions();
+                for (String prescription : prescriptions) {
+                    System.out.println(prescription + " dispensed.");
+                }
+                record.setPrescriptionStatus(statuses); // Update the record
                 isUpdated = true;
             }
         }
 
         if (isUpdated) {
-            saveToCsv(patient.getUserID(), outcomeRecords);
+            writeToCsv(patient.getUserID(), outcomeRecords);
             System.out.println("Prescriptions dispensed and updated.");
             System.out.println();
         } else {
@@ -52,22 +56,28 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
         }
     }
 
-    private void saveToCsv(String patientID, List<AppointmentOutcomeRecord> records) {
+    private void writeToCsv(String patientID, ArrayList<AppointmentOutcomeRecord> outcomeRecords) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
-            for (AppointmentOutcomeRecord record : records) {
-                String csvLine = String.format("%s,%s,%s,%s,%s,%s",
-                        patientID,
-                        record.getDate(),
-                        record.getServiceProvided(),
-                        String.join(";", record.getPrescriptions()),
-                        String.join(";", record.getPrescriptionStatus().stream().map(Enum::toString).toList()),
-                        record.getConsultationNotes()
-                );
-                writer.write(csvLine);
+            for (AppointmentOutcomeRecord record : outcomeRecords) {
+                // Convert the AppointmentOutcomeRecord object to a CSV line
+                StringBuilder csvLine = new StringBuilder();
+                csvLine.append(patientID).append(","); // Include PatientID
+                csvLine.append(record.getDate()).append(",");
+                csvLine.append(record.getServiceProvided()).append(",");
+                csvLine.append(String.join(";", record.getPrescriptions())).append(",");
+                csvLine.append(String.join(";",
+                        record.getPrescriptionStatus().stream()
+                                .map(PrescriptionStatus::toString)
+                                .toList()
+                )).append(",");
+                csvLine.append(record.getConsultationNotes());
+
+                // Write the line to the file
+                writer.write(csvLine.toString());
                 writer.newLine();
             }
         } catch (IOException e) {
-            System.err.println("Error writing to CSV: " + e.getMessage());
+            System.err.println("An error occurred while writing to the CSV file: " + e.getMessage());
         }
     }
 }
