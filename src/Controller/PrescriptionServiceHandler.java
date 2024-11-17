@@ -10,8 +10,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PrescriptionServiceHandler implements PrescriptionHandler{
-    private static final String CSV_FILE_PATH = "HMS/External Data/AppointmentOutcomeRecord.csv";
-    private static final String REPLENISHMENT_PATH = "HMS/External Data/ReplenishRequest.csv";
+    private static final String CSV_FILE_PATH = "External Data/AppointmentOutcomeRecord.csv";
+    private static final String REPLENISHMENT_PATH = "External Data/ReplenishRequest.csv";
 
     @Override
     public void dispenseMedication(Patient patient, LocalDate date){
@@ -66,7 +66,7 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
     }
 
     public void viewInventory(){
-        Inventory inventory = Inventory.initializeFromCSV("HMS/External Data/Inventory.csv");
+        Inventory inventory = Inventory.initializeFromCSV("External Data/Inventory.csv");
         System.out.println("Medication Names: " + inventory.getMedicationName());
         System.out.println("Medication Counts: " + inventory.getMedicationCount());
     }
