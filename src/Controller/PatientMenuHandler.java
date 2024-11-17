@@ -31,6 +31,12 @@ public class PatientMenuHandler implements MenuHandler{
             case 3:
                 appointmentHandler.scheduleAppointment(user);
                 break;
+            case 4:
+                appointmentHandler.rescheduleAppointment(user);
+                break;
+            case 5:
+                appointmentHandler.cancelAppointment(user);
+                break;
 
             default:
                 System.out.println("Invalid option. Please try again.");

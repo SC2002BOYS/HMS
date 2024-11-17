@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import Model.MedicalRecord;
+import Model.User;
 import Model.AppointmentOutcomeRecord;
 import Model.Appointment;
+import Type.Role;
 import Type.Gender;
 import Type.BloodType;
 import Type.AppointmentStatus;
@@ -171,6 +173,28 @@ public class CSVReader {
         return null; // Return null if the patient ID is not found
     }
 
+    // CSV reader for USERS
+    public static List<User> readUsers(String filePath){
 
+        String delimiter = ",";
+        String line;
+        List<User> users = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(delimiter);
+                if (values.length == 5) {
+                    String userID = values[0];
+                    String userPass = values[1];
+                    Role role = Role.valueOf(values[2].toUpperCase());
+                    Gender gender = Gender.valueOf(values[3].toUpperCase());
+                    String age = values[4];
+                    users.add(new User(userID, userPass, role, gender, age));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;        
+    }
 
 }
