@@ -5,8 +5,12 @@ import Model.Patient;
 import Type.Role;
 import Type.Gender;
 import View.ViewMedicalRecord;
+import View.ViewPastApptOutcome;
+import View.ViewPatientAppt;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class PatientUpdateTest {
     public static void main(String[] args) {
@@ -26,7 +30,8 @@ public class PatientUpdateTest {
         viewMedicalRecord.displayRecord(patient.getMedicalRecord());
         /*
      */
-        Inventory inventory = Inventory.initializeFromCSV("HMS/External Data/Inventory.csv");
+        /*
+        Inventory inventory = Inventory.initializeFromCSV("External Data/Inventory.csv");
         System.out.println("Medication Names: " + inventory.getMedicationName());
         System.out.println("Medication Counts: " + inventory.getMedicationCount());
         PharmUpdateInven updater = new PharmUpdateInven();
@@ -34,5 +39,11 @@ public class PatientUpdateTest {
         AppointmentOutcomeRecord firstRecord = records.getFirst();
         updater.perform(firstRecord);
         inventory.getMedicationCount();
+        List<String> medicinesToUpdate = Arrays.asList("Paracetamol", "Zyrtec", "Aspirin");
+        AdminUpdateInven adminUpdate = new AdminUpdateInven(medicinesToUpdate);
+        adminUpdate.updateInventory();
+        */
+        new ViewPatientAppt("JohnDoe");
+        new ViewPastApptOutcome("JohnDoe");
     }
 }
