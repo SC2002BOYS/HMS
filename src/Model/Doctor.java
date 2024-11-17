@@ -14,9 +14,9 @@ public class Doctor extends User{
     private ArrayList<Patient> patients;
     private final DoctorMenu menu = new DoctorMenu();
 
-    public Doctor(String userID,String userPass, Role role, ArrayList<MedicalRecord> medicalRecords){
-        super(userID, userPass, role, gender, role);
-        //this.medicalRecords = medicalRecords;
+    public Doctor(String userID,String userPass, Role role,Gender gender,String age, ArrayList<MedicalRecord> medicalRecords){
+        super(userID, userPass, role, gender, age);
+        this.medicalRecords = medicalRecords;
         this.schedule = new Schedule();
     }
 

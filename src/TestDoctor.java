@@ -6,6 +6,7 @@ import java.util.Scanner;
 import Model.MedicalRecord;
 import Model.Appointment;
 import Controller.ScheduleController;
+import Type.Gender;
 import View.ScheduleView;
 import Model.Doctor;
 import Type.Role;
@@ -19,7 +20,7 @@ public class TestDoctor {
         ArrayList<MedicalRecord> medicalRecords = new ArrayList<>();
         Scanner scanner = new Scanner(System.in);
         int choice = -1;
-        Doctor doctor = new Doctor("xinyu", "password", Role.DOCTOR, medicalRecords);
+        Doctor doctor = new Doctor("xinyu", "password", Role.DOCTOR, Gender.MALE, "23", medicalRecords);
 
 //Availability Test
         ScheduleView view = new ScheduleView(doctor.getSchedule());

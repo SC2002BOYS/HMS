@@ -83,7 +83,7 @@ public class Administrator extends User{
                     break;
             */
             case 4: ReplenishmentController replenishmentController = new ReplenishmentController();
-                    replenishmentController.approveReplenishmentRequest("requestId");
+                    replenishmentController.approveReplenishmentRequest(); //Shawn idk if there was smthing supposed to be inside
 
                     break;
         }
