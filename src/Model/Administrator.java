@@ -19,75 +19,55 @@ import View.AdministratorMenu;
 import View.HospitalStaffMenu;
 import Controller.StaffController;
 import Controller.AppointmentController;
+import Controller.IAppointmentController;
+import Controller.IReplenishmentController;
+import Controller.IStaffController;
 import Controller.InventoryController;
+import Controller.MenuHandler;
 import Controller.ReplenishmentController;
 import java.util.Scanner;
 
 public class Administrator extends User{
     //attributes
+    private final MenuHandler menuHandler;
     private final AdministratorMenu menu = new AdministratorMenu();
     private final HospitalStaffMenu staffMenu = new HospitalStaffMenu();
-    //the controllers to do the actions
-    private StaffController staffController;
-    private AppointmentController appointmentController;
-    //private InventoryController inventoryController;
-    private ReplenishmentController replenishmentController;
 
-    //constructor
-    public Administrator(String userID, String userPass, Role role, Gender gender, String age, StaffController staffController, AppointmentController appointmentController, ReplenishmentController replenishmentController) {
-        super(userID,userPass,role, gender, age);
-        this.staffController = staffController;
-        this.appointmentController = appointmentController;
-        //this.inventoryController = inventoryController;
-        this.replenishmentController = replenishmentController;
+    // The controllers to do the actions
+
+    // Constructor
+    public Administrator(String userID, String password, Gender gender, String age, MenuHandler menuHandler)
+    {
+        super(userID, password,Role.ADMIN, gender, age);
+        this.menuHandler = menuHandler;
+
     }
 
-    //to print the administrator menu
-    public void printMenu(){
-        this.menu.printMenu();
+
+    public void printStaffMenu()
+    {
+        staffMenu.printMenu();
     }
-        public void runModule(int choice){
-        switch(choice){
-            case 1: this.staffMenu.printMenu();
-                    staffController = new StaffController();
-                    switch (choice) {
-                        case 1: 
-                                staffController.viewHospitalStaff();
-                                break;
-                        case 2:
-                                staffController.addStaffMember();
-                                break;
-                        
-                        case 3:staffController.updateStaffMember();
-                                break;
-
-                        case 4: staffController.removeStaffMember();
-                                break;
-
-                        case 5: return;
-                    
-                        default:
-                                System.out.println("Invalid option. Please try again.");
-                            break;
-                    }
-
-                    break;
-
-            case 2: appointmentController = new AppointmentController();
-                    appointmentController.viewAppointmentsDetails();
-                    break;
-            
-            /*
-            case 3 : InventoryController inventoryController = new InventoryController();
-                    inventoryController.updateMedicationStockLevel("medicationId", 10);
-                    break;
-            */
-            case 4: ReplenishmentController replenishmentController = new ReplenishmentController();
-                    replenishmentController.approveReplenishmentRequest(); //Shawn idk if there was smthing supposed to be inside
-
-                    break;
+   
+        public void runModule()
+        {
+                boolean exit = false;
+                while(!exit)
+                {
+                        menuHandler.displayMenu();
+                        System.out.print("Enter your choice: ");
+                        int choice = new Scanner(System.in).nextInt();  
+                        if(choice==5)
+                        {
+                                exit = true;
+                        }
+                        else
+                        {
+                                menuHandler.handleMenuOption(choice, this);
+                        }
+                }
+                
         }
+        
     }
 
-
-}
