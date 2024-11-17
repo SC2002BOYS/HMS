@@ -40,6 +40,7 @@ public class Main {
         String userPass = "";
 
         boolean loggedIn = false;
+        boolean length = false;
         while (!loggedIn) {
             System.out.println("Enter your userID: ");
             userID = sc.next();
@@ -50,10 +51,19 @@ public class Main {
                 User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
                 System.out.println();
-                if(userPass.equals("password123")){
+                if(userPass.equals("password123")) {
                     System.out.println("Initial login! Please set a strong password");
-                    System.out.println("Enter your new password: ");
-                    String newPW = sc.next();
+                    String newPW = null;
+                    while (!length) {
+                        System.out.print("Enter your new password: ");
+                        newPW = sc.next();
+                        if (newPW.length() <= 11) {
+                            System.out.println("Password length too short, enter stronger password");
+                        } else {
+                            length = true;
+                        }
+                    }
+
                     PasswordController changePW = new PasswordController(userID, newPW);
 
                 }

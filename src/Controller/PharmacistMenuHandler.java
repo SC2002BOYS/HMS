@@ -26,7 +26,7 @@ public class PharmacistMenuHandler implements MenuHandler{
         System.out.println();
     }
 
-    public void handleMenuOption(int choice, User pharmacist) {
+    public void handleMenuOption(int choice, User user) {
         Scanner scanner = new Scanner(System.in);
         switch (choice) {
             case 1:
@@ -58,6 +58,12 @@ public class PharmacistMenuHandler implements MenuHandler{
                 System.out.print("Enter Medication in shortage: ");
                 String meds = scanner.next();
                 prescriptionHandler.requestPrescription(replenishmentDate, meds);
+                break;
+
+            case 5:
+                System.out.print("Enter new password: ");
+                String newPass = scanner.nextLine();
+                PasswordController passChanger = new PasswordController(user.getUserID(), newPass);
                 break;
 
 
