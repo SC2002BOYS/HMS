@@ -3,6 +3,8 @@ import java.util.*;
 
 import Model.Patient;
 import Model.User;
+import View.ViewMedicalRecord;
+import View.ViewPastApptOutcome;
 
 public class PatientMenuHandler implements MenuHandler{
     private final AppointmentHandler appointmentHandler;
@@ -31,6 +33,12 @@ public class PatientMenuHandler implements MenuHandler{
         Patient patient = (Patient) user;
         switch(choice){
 
+            case 1:
+                System.out.println("Medical Record of " + user.getUserID());
+                ViewMedicalRecord viewRecord = new ViewMedicalRecord();
+                viewRecord.displayRecord(patient.getMedicalRecord());
+                break;
+
             case 2:
                 UpdateController updateController = new UpdateController();
                 System.out.print("Enter new email: ");
@@ -44,6 +52,11 @@ public class PatientMenuHandler implements MenuHandler{
             case 3:
                 appointmentHandler.scheduleAppointment(user);
                 break;
+
+            case 7:
+                ViewPastApptOutcome viewPast = new ViewPastApptOutcome(user.getUserID());
+                break;
+
 
             case 8:
                 System.out.print("Enter new password: ");
