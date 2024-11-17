@@ -11,8 +11,8 @@ public class ViewPatientAppt {
     }
 
     private void viewAppointments(String userID) {
-        System.out.println("Appointments for user: " + userID);
-        System.out.println("------------------------------------");
+        System.out.println("Appointments for User: " + userID);
+        System.out.println("=====================================");
 
         try (BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENTS_FILE))) {
             String line;
@@ -24,9 +24,21 @@ public class ViewPatientAppt {
                 String[] parts = line.split(",");
 
                 // Check if the first index matches the userID
-                if (parts.length > 0 && parts[0].equals(userID)) {
+                if (parts.length >= 5 && parts[0].equals(userID)) {
                     hasAppointments = true;
-                    System.out.println(line); // Print the matching line
+
+                    // Extract and format the fields
+                    String doctor = parts[1].trim();
+                    String startDateTime = parts[2].trim();
+                    String endDateTime = parts[3].trim();
+                    String status = parts[4].trim();
+
+                    // Display the formatted output
+                    System.out.println("Doctor: " + doctor);
+                    System.out.println("Start Date & Time: " + startDateTime);
+                    System.out.println("End Date & Time: " + endDateTime);
+                    System.out.println("Status: " + status);
+                    System.out.println("-------------------------------------");
                 }
             }
 
