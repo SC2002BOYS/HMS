@@ -5,6 +5,7 @@ import Model.Patient;
 import Model.User;
 import View.ViewMedicalRecord;
 import View.ViewPastApptOutcome;
+import View.ViewPatientAppt;
 
 public class PatientMenuHandler implements MenuHandler{
     private final AppointmentHandler appointmentHandler;
@@ -51,6 +52,10 @@ public class PatientMenuHandler implements MenuHandler{
 
             case 3:
                 appointmentHandler.scheduleAppointment(user);
+                break;
+
+            case 6:
+                ViewPatientAppt viewPatientAppt = new ViewPatientAppt(user.getUserID());
                 break;
 
             case 7:
