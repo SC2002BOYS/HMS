@@ -47,7 +47,7 @@ public class Main {
             userPass = sc.next();
 
             if (authController.toLogin(userID, userPass)) {
-                User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
+                User user = new User(userID, userPass, role, CSVReader.getGender("HMS/External Data/Users.csv", userID), CSVReader.getAge("HMS/External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
                 System.out.println();
                 loggedIn = true;
@@ -56,7 +56,6 @@ public class Main {
                 System.out.println("Invalid username or password. Please try again.");
             }
 
-        }
         switch(role){
 
             case PHARMACIST:

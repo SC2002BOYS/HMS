@@ -18,7 +18,6 @@ public class Patient extends User {
     private final MenuHandler menuHandler;
 
     //constructor
-
     public Patient(String userID, String userPass, Gender gender, String age, MenuHandler menuHandler){
         super(userID, userPass, Role.PATIENT, gender, age);
         this.medicalRecord = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", userID);

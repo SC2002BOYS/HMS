@@ -39,7 +39,9 @@ public class PharmacistMenuHandler implements MenuHandler{
             case 2:
                 System.out.print("Enter Patient ID: ");
                 String patientIDForDispense = scanner.next();
+
                 Patient patientForDispense = new Patient(patientIDForDispense, CSVReader.getPassword("External Data/AppointmentOutcomeRecord.csv",patientIDForDispense), CSVReader.getGender("External Data/Users.csv", patientIDForDispense), CSVReader.getAge("External Data/Users.csv", patientIDForDispense), new PatientMenuHandler(new PatientScheduleHandler()));
+
                 System.out.print("Enter Date (yyyy-MM-dd): ");
                 LocalDate date = LocalDate.parse(scanner.next());
                 prescriptionHandler.dispenseMedication(patientForDispense, date);
@@ -47,6 +49,8 @@ public class PharmacistMenuHandler implements MenuHandler{
 
             case 3:
                 System.out.println();
+                prescriptionHandler.viewInventory();
+                break;
 
             case 4:
                 System.out.print("Enter Today's Data(yyyy-MM-dd): ");
