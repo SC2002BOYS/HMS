@@ -77,12 +77,14 @@ public class Administrator extends User{
                     appointmentController.viewAppointmentsDetails();
                     break;
             
-            case 3 : //inventoryController = new InventoryController();
-                    //inventoryController.updateMedicationStockLevel("medicationId", 10);
+            /*
+            case 3 : InventoryController inventoryController = new InventoryController();
+                    inventoryController.updateMedicationStockLevel("medicationId", 10);
                     break;
+            */
+            case 4: ReplenishmentController replenishmentController = new ReplenishmentController();
+                    replenishmentController.approveReplenishmentRequest("requestId");
 
-            case 4: replenishmentController = new ReplenishmentController();
-                    replenishmentController.approveReplenishmentRequest();
                     break;
         }
     }
