@@ -45,5 +45,7 @@ public class PatientUpdateTest {
         */
         new ViewPatientAppt("JohnDoe");
         new ViewPastApptOutcome("JohnDoe");
+        AdminUpdateInven adminUpdate = new AdminUpdateInven("Ibuprofen");
+        adminUpdate.updateInventory();
     }
 }

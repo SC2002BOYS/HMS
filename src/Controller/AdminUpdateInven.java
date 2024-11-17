@@ -8,11 +8,11 @@ import java.util.Map;
 public class AdminUpdateInven {
 
     private static final String INVENTORY_FILE = "External Data/Inventory.csv";
-    private List<String> listOfMedicine;
+    private String medicineName;
 
     // Constructor to initialize the list of medicines
-    public AdminUpdateInven(List<String> listOfMedicine) {
-        this.listOfMedicine = listOfMedicine;
+    public AdminUpdateInven(String medicineName) {
+        this.medicineName = medicineName;
     }
 
     // Method to update inventory
@@ -24,14 +24,12 @@ public class AdminUpdateInven {
             return;
         }
 
-        // Update stocks of medicines in the list
-        for (String medicine : listOfMedicine) {
-            if (inventory.containsKey(medicine)) {
-                inventory.put(medicine, 100); // Set stock to 100
-                System.out.println("Updated stock for " + medicine + " to 100.");
-            } else {
-                System.out.println("Medicine " + medicine + " not found in inventory.");
-            }
+        // Update the stock of the specified medicine
+        if (inventory.containsKey(medicineName)) {
+            inventory.put(medicineName, 100); // Set stock to 100
+            System.out.println("Updated stock for " + medicineName + " to 100.");
+        } else {
+            System.out.println("Medicine " + medicineName + " not found in inventory.");
         }
 
         // Save the updated inventory back to the CSV file
