@@ -44,6 +44,15 @@ public class PharmacistMenuHandler implements MenuHandler{
                 prescriptionHandler.dispenseMedication(patientForDispense, date);
                 break;
 
+            case 4:
+                System.out.print("Enter Today's Data(yyyy-MM-dd): ");
+                LocalDate replenishmentDate = LocalDate.parse(scanner.next());
+                System.out.print("Enter Medication in shortage: ");
+                String meds = scanner.next();
+                prescriptionHandler.requestPrescription(replenishmentDate, meds);
+                break;
+
+
 
             default:
                 System.out.println("Invalid option. Please try again.");

@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class PrescriptionServiceHandler implements PrescriptionHandler{
     private static final String CSV_FILE_PATH = "External Data/AppointmentOutcomeRecord.csv";
+    private static final String REPENISHMENT_PATHH = "External Data/ReplenishRequest.csv";
 
     @Override
     public void dispenseMedication(Patient patient, LocalDate date) {
@@ -53,6 +54,20 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
                 System.out.println("----------------------------");
                 System.out.println();
             });
+        }
+    }
+
+    @Override
+    public void requestPrescription(LocalDate date, String prescription){
+        String status = "PENDING";
+
+        String csvLine = date + "," + prescription + "," + status;
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(REPENISHMENT_PATHH, true))) { // Open in append mode
+            writer.write(csvLine);
+            writer.newLine();
+            System.out.println("Prescription request for " + prescription + " sent for approval.");
+        } catch (IOException e) {
+            System.err.println("An error occurred while writing to the CSV file: " + e.getMessage());
         }
     }
 

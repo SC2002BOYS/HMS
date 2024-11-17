@@ -45,7 +45,7 @@ public class Pharmacist extends User{
             System.out.print("Enter your choice: ");
             int choice = new Scanner(System.in).nextInt();
 
-            if (choice == 5) {
+            if (choice == 6) {
                 exit = true;
             } else {
                 menuHandler.handleMenuOption(choice, this);
