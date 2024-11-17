@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PharmUpdateInven implements IUpdateInven{
-    private static final String INVENTORY_FILE = "HMS/External Data/Inventory.csv";
+    private static final String INVENTORY_FILE = "External Data/Inventory.csv";
     private static final int LOW_STATUS = 5;
 
     public void perform(AppointmentOutcomeRecord appointmentOutcomeRecord) {

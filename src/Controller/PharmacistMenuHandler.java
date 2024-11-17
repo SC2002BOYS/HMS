@@ -44,6 +44,9 @@ public class PharmacistMenuHandler implements MenuHandler{
                 prescriptionHandler.dispenseMedication(patientForDispense, date);
                 break;
 
+            case 3:
+                System.out.println();
+
             case 4:
                 System.out.print("Enter Today's Data(yyyy-MM-dd): ");
                 LocalDate replenishmentDate = LocalDate.parse(scanner.next());
