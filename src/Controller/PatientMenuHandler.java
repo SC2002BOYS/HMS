@@ -33,9 +33,9 @@ public class PatientMenuHandler implements MenuHandler{
 
             case 2:
                 UpdateController updateController = new UpdateController();
-                System.out.println("Enter new email: ");
+                System.out.print("Enter new email: ");
                 String newEmail = sc.nextLine();
-                System.out.println("Enter new mobile number: ");
+                System.out.print("Enter new mobile number: ");
                 int newNumber = sc.nextInt();
                 IUpdate patientUpdate = new PatientUpdate(newEmail, newNumber);
                 updateController.update(patientUpdate, patient.getMedicalRecord());
@@ -43,6 +43,12 @@ public class PatientMenuHandler implements MenuHandler{
 
             case 3:
                 appointmentHandler.scheduleAppointment(user);
+                break;
+
+            case 8:
+                System.out.print("Enter new password: ");
+                String newPass = sc.nextLine();
+                PasswordController passChanger = new PasswordController(user.getUserID(), newPass);
                 break;
 
             default:
