@@ -2,7 +2,9 @@ package Model;
 
 import View.DoctorMenu;
 import Type.Role;
+import Type.Gender;
 import java.util.ArrayList;
+
 
 public class Doctor extends User{
 
@@ -13,7 +15,7 @@ public class Doctor extends User{
     private final DoctorMenu menu = new DoctorMenu();
 
     public Doctor(String userID,String userPass, Role role, ArrayList<MedicalRecord> medicalRecords){
-        super(userID, userPass, role);
+        super(userID, userPass, role, gender, role);
         //this.medicalRecords = medicalRecords;
         this.schedule = new Schedule();
     }

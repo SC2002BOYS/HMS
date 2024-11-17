@@ -12,39 +12,33 @@ package Model;
 // ● Administrator updates the stock level of a medication.
 // ● Verify that the medication's stock level is updated in the inventory.
 // Test Case 23: Approve Replenishment Requests
-// ● Administrator approves a replenishment request from a pharmacist.
-// ● Verify that the request status changes to "approved," and the medication
-// inventory is updated accordingly.
 
-
+import Type.Gender;
 import Type.Role;
 import View.AdministratorMenu;
+import View.HospitalStaffMenu;
 import Controller.StaffController;
 import Controller.AppointmentController;
 import Controller.InventoryController;
 import Controller.ReplenishmentController;
-
-import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Administrator extends User{
-    public Administrator(String userID, String userPass, Role role) 
-    {
-        super(userID, userPass, role);
-    }
     //attributes
     private final AdministratorMenu menu = new AdministratorMenu();
+    private final HospitalStaffMenu staffMenu = new HospitalStaffMenu();
     //the controllers to do the actions
-    private StaffController staffControllerr;
+    private StaffController staffController;
     private AppointmentController appointmentController;
-    private InventoryController inventoryController;
+    //private InventoryController inventoryController;
     private ReplenishmentController replenishmentController;
 
     //constructor
-    public Administrator(String userID, String userPass, Role role, StaffController staffControllerr, AppointmentController appointmentController, InventoryController inventoryController, ReplenishmentController replenishmentController) {
-        super(userID, userPass, role);
-        this.staffControllerr = staffControllerr;
+    public Administrator(String userID, String userPass, Role role, Gender gender, String age, StaffController staffController, AppointmentController appointmentController, ReplenishmentController replenishmentController) {
+        super(userID,userPass,role, gender, age);
+        this.staffController = staffController;
         this.appointmentController = appointmentController;
-        this.inventoryController = inventoryController;
+        //this.inventoryController = inventoryController;
         this.replenishmentController = replenishmentController;
     }
 
@@ -54,12 +48,35 @@ public class Administrator extends User{
     }
         public void runModule(int choice){
         switch(choice){
-            case 1: staffControllerr.viewHospitalStaff();
+            case 1: this.staffMenu.printMenu();
+                    staffController = new StaffController();
+                    switch (choice) {
+                        case 1: 
+                                staffController.viewHospitalStaff();
+                                break;
+                        case 2:
+                                staffController.addStaffMember();
+                                break;
+                        
+                        case 3:staffController.updateStaffMember();
+                                break;
+
+                        case 4: staffController.removeStaffMember();
+                                break;
+
+                        case 5: return;
+                    
+                        default:
+                                System.out.println("Invalid option. Please try again.");
+                            break;
+                    }
+
                     break;
 
-            case 2: AppointmentController appointmentController = new AppointmentController();
+            case 2: appointmentController = new AppointmentController();
                     appointmentController.viewAppointmentsDetails();
                     break;
+            
             /*
             case 3 : InventoryController inventoryController = new InventoryController();
                     inventoryController.updateMedicationStockLevel("medicationId", 10);
@@ -67,6 +84,7 @@ public class Administrator extends User{
             */
             case 4: ReplenishmentController replenishmentController = new ReplenishmentController();
                     replenishmentController.approveReplenishmentRequest("requestId");
+
                     break;
         }
     }
