@@ -1,6 +1,7 @@
 package Controller;
 import java.util.*;
 import Model.AppointmentOutcomeRecord;
+import Model.Inventory;
 import Model.Patient;
 import Type.PrescriptionStatus;
 import java.time.LocalDate;
@@ -9,12 +10,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class PrescriptionServiceHandler implements PrescriptionHandler{
-    private static final String CSV_FILE_PATH = "External Data/AppointmentOutcomeRecord.csv";
-    private static final String REPLENISHMENT_PATH = "External Data/ReplenishRequest.csv";
+    private static final String CSV_FILE_PATH = "HMS/External Data/AppointmentOutcomeRecord.csv";
+    private static final String REPLENISHMENT_PATH = "HMS/External Data/ReplenishRequest.csv";
 
     @Override
     public void dispenseMedication(Patient patient, LocalDate date){
         PharmUpdateInven inventoryUpdater = new PharmUpdateInven();
+        InventoryController inventoryController = new InventoryController();
         ArrayList<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
         boolean isUpdated = false;
 
@@ -32,7 +34,8 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
                 isUpdated = true;
 
                 //Update inventory after dispense
-                inventoryUpdater.perform(record);
+                //inventoryUpdater.perform(record);
+                inventoryController.update(inventoryUpdater, record);
             }
         }
 
@@ -60,6 +63,12 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
                 System.out.println();
             });
         }
+    }
+
+    public void viewInventory(){
+        Inventory inventory = Inventory.initializeFromCSV("HMS/External Data/Inventory.csv");
+        System.out.println("Medication Names: " + inventory.getMedicationName());
+        System.out.println("Medication Counts: " + inventory.getMedicationCount());
     }
 
     @Override

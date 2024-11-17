@@ -6,4 +6,5 @@ public interface PrescriptionHandler {
     void dispenseMedication(Patient patient, LocalDate date);
     void viewPatientRecords(Patient patient);
     void requestPrescription(LocalDate date, String prescription);
+    void viewInventory();
 }
