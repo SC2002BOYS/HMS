@@ -17,12 +17,6 @@ public class Pharmacist extends User{
         this.menuHandler = menuHandler;
     }
 
-    public Pharmacist(MenuHandler menuHandler) {
-        this.menuHandler = menuHandler;
-        this.inventory = null;
-        this.requests = null;
-    }
-
     public Inventory getInventory() {
         return inventory;
     }

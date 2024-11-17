@@ -3,5 +3,5 @@ import Model.User;
 
 public interface MenuHandler {
     void displayMenu();
-    void handleMenuOption(int choice, User pharmacist);
+    void handleMenuOption(int choice, User user);
 }
