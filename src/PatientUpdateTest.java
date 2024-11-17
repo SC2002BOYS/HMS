@@ -5,6 +5,7 @@ import Model.Patient;
 import Type.Role;
 import Type.Gender;
 import View.ViewMedicalRecord;
+import View.ViewPatientAppt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,5 +40,6 @@ public class PatientUpdateTest {
         List<String> medicinesToUpdate = Arrays.asList("Paracetamol", "Zyrtec", "Aspirin");
         AdminUpdateInven adminUpdate = new AdminUpdateInven(medicinesToUpdate);
         adminUpdate.updateInventory();
+        new ViewPatientAppt("JohnDoe");
     }
 }
