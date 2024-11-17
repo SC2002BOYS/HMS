@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import Controller.CSVReader;
 import Model.User;
 import Type.Role;
+import Controller.MenuHandler;
 
 public class PharmacistMenuHandler implements MenuHandler{
     private final PrescriptionHandler prescriptionHandler;
@@ -31,14 +32,14 @@ public class PharmacistMenuHandler implements MenuHandler{
             case 1:
                 System.out.print("Enter Patient ID: ");
                 String patientID = scanner.next();
-                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv",patientID), Role.PATIENT, CSVReader.getGender("External Data/Users.csv", patientID), CSVReader.getAge("External Data/Users.csv", patientID)); // Replace with actual retrieval logic
+                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID), CSVReader.getGender("External Data/Users.csv", patientID), CSVReader.getAge("External Data/Users.csv", patientID), new PatientMenuHandler(new PatientScheduleHandler()));
                 prescriptionHandler.viewPatientRecords(patient);
                 break;
 
             case 2:
                 System.out.print("Enter Patient ID: ");
                 String patientIDForDispense = scanner.next();
-                Patient patientForDispense = new Patient(patientIDForDispense, CSVReader.getPassword("External Data/AppointmentOutcomeRecord.csv",patientIDForDispense), Role.PATIENT, CSVReader.getGender("External Data/Users.csv", patientIDForDispense), CSVReader.getAge("External Data/Users.csv", patientIDForDispense)); // Replace with actual retrieval logic
+                Patient patientForDispense = new Patient(patientIDForDispense, CSVReader.getPassword("External Data/AppointmentOutcomeRecord.csv",patientIDForDispense), CSVReader.getGender("External Data/Users.csv", patientIDForDispense), CSVReader.getAge("External Data/Users.csv", patientIDForDispense), new PatientMenuHandler(new PatientScheduleHandler()));
                 System.out.print("Enter Date (yyyy-MM-dd): ");
                 LocalDate date = LocalDate.parse(scanner.next());
                 prescriptionHandler.dispenseMedication(patientForDispense, date);
