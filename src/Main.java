@@ -3,8 +3,11 @@ import java.util.*;
 import Controller.*;
 import Model.Patient;
 import Model.Pharmacist;
+import Model.Administrator;
 import Model.User;
 import Type.Role;
+import View.Menu;
+import View.HospitalStaffMenu;
 
 public class Main {
     public static void main(String[] args){
@@ -84,6 +87,16 @@ public class Main {
             case PATIENT:
                 Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID),new PatientMenuHandler(new PatientScheduleHandler()));
                 patient.runModule();
+                break;
+            
+            case ADMIN:
+                IStaffController staffController= new StaffController();
+                IAppointmentController appointmentController = new AppointmentController();
+                IReplenishmentController replenishmentController = new ReplenishmentController();
+                Menu hospitalStaffMenu = new HospitalStaffMenu();
+                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(replenishmentController,appointmentController,staffController,hospitalStaffMenu);
+                Administrator admin = new Administrator(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), adminMenuHandler);
+                admin.runModule();
                 break;
         }
     }

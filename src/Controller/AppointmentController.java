@@ -4,7 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class AppointmentController {
+public class AppointmentController implements IAppointmentController {
     // Method to view appointments details
     
     private static final String CSV_FILE_PATH = "HMS/External Data/Appointments.csv";
