@@ -1,6 +1,7 @@
 import java.util.*;
 
 import Controller.*;
+import Model.Patient;
 import Model.Pharmacist;
 import Model.User;
 import Type.Role;
@@ -35,12 +36,15 @@ public class Main {
                 return;
         }
 
+        String userID = "";
+        String userPass = "";
+
         boolean loggedIn = false;
         while (!loggedIn) {
             System.out.println("Enter your userID: ");
-            String userID = sc.next();
+            userID = sc.next();
             System.out.println("Enter your password: ");
-            String userPass = sc.next();
+            userPass = sc.next();
 
             if (authController.toLogin(userID, userPass)) {
                 User user = new User(userID, userPass, role, CSVReader.getGender("HMS/External Data/Users.csv", userID), CSVReader.getAge("HMS/External Data/Users.csv", userID));
@@ -52,16 +56,19 @@ public class Main {
                 System.out.println("Invalid username or password. Please try again.");
             }
 
-            switch(role){
+        switch(role){
 
-                case PHARMACIST:
-                    PrescriptionHandler prescriptionService = new PrescriptionServiceHandler();
-                    MenuHandler pharmacistMenuHandler = new PharmacistMenuHandler(prescriptionService);
-                    Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("HMS/External Data/Users.csv", userID), CSVReader.getGender("HMS/External Data/Users.csv", userID), CSVReader.getAge("HMS/External Data/Users.csv", userID), pharmacistMenuHandler);
-                    pharmacist.runModule();
+            case PHARMACIST:
+                Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), new PharmacistMenuHandler(new PrescriptionServiceHandler()));
+                pharmacist.runModule();
+                break;
 
-
-            }
+            case PATIENT:
+                AppointmentHandler patientScheduler = new PatientScheduleHandler();
+                MenuHandler patientMenuHandler = new PatientMenuHandler(patientScheduler);
+                Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), patientMenuHandler);
+                patient.runModule();
+                break;
         }
     }
 }

@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,8 @@ public class CSVReader {
     }
 
     // CSV reader for Appointments
-    public static ArrayList<Appointment> getAppointments(String filePath, String patientID) {
+    public static ArrayList<Appointment> getAppointments(String filePath, String patientID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         ArrayList<Appointment> appointments = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -60,8 +62,8 @@ public class CSVReader {
                 // Match patientID with the external identifier (assuming values[0] is patient ID)
                 if (values[0].equals(patientID)) {
                     String doctor = values[1];
-                    LocalDateTime startTime = LocalDateTime.parse(values[2]);
-                    LocalDateTime endTime = LocalDateTime.parse(values[3]);
+                    LocalDateTime startTime = LocalDateTime.parse(values[2],formatter);
+                    LocalDateTime endTime = LocalDateTime.parse(values[3],formatter);
                     AppointmentStatus status = AppointmentStatus.valueOf(values[4].toUpperCase());
 
                     appointments.add(new Appointment(doctor, startTime, endTime, status));
@@ -105,23 +107,26 @@ public class CSVReader {
     }
 
     public static String getPassword(String filePath, String patientID){
-
         String line;
         String delimiter = ",";
-        String storedUserPass = "";
+        String storedUserPass = null;  // Initialize as null to handle when no match is found
 
-        try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
-            while((line=br.readLine()) != null){
-
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
                 String[] userCred = line.split(delimiter);
                 String storedUserID = userCred[0];
-                storedUserPass = userCred[1];
 
+                // Check if the current user ID matches the given patient ID
+                if (storedUserID.equals(patientID)) {
+                    storedUserPass = userCred[1]; // Get the password for the matched user
+                    break;  // Exit the loop once a match is found
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return storedUserPass;
+
+        return storedUserPass;  // Return the password if found, or null if not found
     }
 
     public static Gender getGender(String filePath, String patientID){

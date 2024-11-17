@@ -1,9 +1,13 @@
 package Model;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import Controller.CSVReader;
+import Controller.MenuHandler;
 import View.PatientMenu;
 import Type.Gender;
 import Type.Role;
+import Controller.MenuHandler;
 
 public class Patient extends User {
 
@@ -11,20 +15,15 @@ public class Patient extends User {
     private MedicalRecord medicalRecord;
     private ArrayList<AppointmentOutcomeRecord> appointmentOutcomeRecords;
     private ArrayList<Appointment> appointments;
-    private final PatientMenu menu = new PatientMenu();
+    private final MenuHandler menuHandler;
 
     //constructor
-
-    public Patient(String userID, String userPass, Role role, Gender gender, String age){
-        super(userID, userPass, role, gender, age);
-        this.medicalRecord = CSVReader.findMedicalRecordByPatientID("HMS/External Data/MedicalRecord.csv", userID);
-        this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("HMS/External Data/AppointmentOutcomeRecord.csv", userID);
-        this.appointments = CSVReader.getAppointments("HMS/External Data/Appointments.csv", userID);
-    }
-
-    //to print the patient menu
-    public void printMenu(){
-        this.menu.printMenu();
+    public Patient(String userID, String userPass, Gender gender, String age, MenuHandler menuHandler){
+        super(userID, userPass, Role.PATIENT, gender, age);
+        this.medicalRecord = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", userID);
+        this.appointmentOutcomeRecords = CSVReader.getAppointmentOutcomeRecords("External Data/AppointmentOutcomeRecord.csv", userID);
+        this.appointments = CSVReader.getAppointments("External Data/Appointments.csv", userID);
+        this.menuHandler = menuHandler;
     }
 
     //getters and setters
@@ -52,5 +51,20 @@ public class Patient extends User {
         this.appointments = appointments;
     }
 
+    public void runModule() {
+        boolean exit = false;
+        while (!exit) {
+            menuHandler.displayMenu();
+            System.out.print("Enter your choice: ");
+            int choice = new Scanner(System.in).nextInt();
+
+
+            if (choice == 9) {
+                exit = true;
+            } else {
+                menuHandler.handleMenuOption(choice, this);
+            }
+        }
+    }
 
 }
