@@ -50,6 +50,13 @@ public class Main {
                 User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
                 System.out.println();
+                if(userPass.equals("password123")){
+                    System.out.println("Initial login! Please set a strong password");
+                    System.out.println("Enter your new password: ");
+                    String newPW = sc.next();
+                    PasswordController changePW = new PasswordController(userID, newPW);
+
+                }
                 loggedIn = true;
 
             } else {
