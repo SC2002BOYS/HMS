@@ -3,13 +3,14 @@ import Model.AppointmentOutcomeRecord;
 import Model.Inventory;
 import Model.Patient;
 import Type.Role;
+import Type.Gender;
 import View.ViewMedicalRecord;
 
 import java.util.ArrayList;
 
 public class PatientUpdateTest {
     public static void main(String[] args) {
-        Patient patient = new Patient("JohnDoe", "password123", Role.PATIENT);
+        Patient patient = new Patient("JohnDoe", "password123", Role.PATIENT, Gender.MALE, "30");
 
     /*
         System.out.println(patient.getMedicalRecord().getPastDiagnosis());

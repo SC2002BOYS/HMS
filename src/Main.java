@@ -43,7 +43,7 @@ public class Main {
             String userPass = sc.next();
 
             if (authController.toLogin(userID, userPass)) {
-                User user = new User(userID, userPass, role);
+                User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
                 System.out.println();
                 loggedIn = true;
@@ -57,7 +57,7 @@ public class Main {
                 case PHARMACIST:
                     PrescriptionHandler prescriptionService = new PrescriptionServiceHandler();
                     MenuHandler pharmacistMenuHandler = new PharmacistMenuHandler(prescriptionService);
-                    Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), pharmacistMenuHandler);
+                    Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), pharmacistMenuHandler);
                     pharmacist.runModule();
 
 
