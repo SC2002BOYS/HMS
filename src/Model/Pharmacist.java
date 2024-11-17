@@ -1,71 +1,50 @@
 package Model;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
-import java.time.*;
-
-import Controller.TimeGetter;
-import Controller.UserActions;
-import View.PharmacistMenu;
-import View.AllViewAppointmentOutcome;
-import Controller.CSVReader;
+import Controller.MenuHandler;
+import Type.Gender;
 import Type.Role;
-import Controller.EditMedStatus;
+import java.util.*;
 
-public class Pharmacist extends User implements UserActions{
+
+public class Pharmacist extends User{
     private Inventory inventory;
     private ArrayList<Request> requests;
-    private final PharmacistMenu menu = new PharmacistMenu();
+    private final MenuHandler menuHandler;
 
-    public Pharmacist(Inventory inventory,ArrayList<Request> requests){
+    public Pharmacist(String userID, String password, Gender gender, String age, MenuHandler menuHandler) {
+        super(userID, password, Role.PHARMACIST, gender, age);
+        this.inventory = new Inventory(); // Example initialization
+        this.requests = new ArrayList<>(); // Example initialization
+        this.menuHandler = menuHandler;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
         this.inventory = inventory;
+    }
+
+    public ArrayList<Request> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(ArrayList<Request> requests) {
         this.requests = requests;
     }
 
-    public Pharmacist(){
-        this.inventory = null;
-        this.requests = null;
-    }
+    public void runModule() {
+        boolean exit = false;
+        while (!exit) {
+            menuHandler.displayMenu();
+            System.out.print("Enter your choice: ");
+            int choice = new Scanner(System.in).nextInt();
 
-    public void printMenu(){
-        this.menu.printMenu();
-    }
-
-    public void runModule(int choice){
-        switch(choice){
-            case 1:
-                Scanner sc = new Scanner(System.in);
-                System.out.println("Please enter PatientID:");
-                String patientID = sc.next();
-                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID), Role.PATIENT);
-                AllViewAppointmentOutcome.staffViewAppointmentOutcome(patient.getAppointmentOutcomeRecords());
-
-            case 2:
-                Scanner sc1 = new Scanner(System.in);
-                System.out.println("Please enter PatientID:");
-                String patientID1 = sc1.next();
-                Patient patient1 = new Patient(patientID1, CSVReader.getPassword("External Data/Users.csv", patientID1), Role.PATIENT);
-                LocalDate date = TimeGetter.getTime();
-                EditMedStatus.dispenseMed(patient1, date);
-
-
+            if (choice == 6) {
+                exit = true;
+            } else {
+                menuHandler.handleMenuOption(choice, this);
+            }
         }
     }
-
-    public void setInventory(Inventory inventory){
-        this.inventory = inventory;
-    }
-
-    public Inventory getInventory(){
-        return this.inventory;
-    }
-
-    public void setRequests(ArrayList<Request> requests){
-        this.requests = requests;
-    }
-
-    public ArrayList<Request> getRequests(){
-        return this.requests;
-    }
-
 }

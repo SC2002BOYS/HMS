@@ -1,9 +1,9 @@
 import java.util.*;
-import Controller.AuthenticationController;
+
+import Controller.*;
 import Model.Pharmacist;
 import Model.User;
 import Type.Role;
-import View.LoginMenu;
 
 public class Main {
     public static void main(String[] args){
@@ -43,8 +43,9 @@ public class Main {
             String userPass = sc.next();
 
             if (authController.toLogin(userID, userPass)) {
-                User user = new User(userID, userPass, role);
+                User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
+                System.out.println();
                 loggedIn = true;
 
             } else {
@@ -54,10 +55,10 @@ public class Main {
             switch(role){
 
                 case PHARMACIST:
-                    Pharmacist pharmacist = new Pharmacist();
-                    pharmacist.printMenu();
-                    int choice = sc.nextInt();
-                    pharmacist.runModule(choice);
+                    PrescriptionHandler prescriptionService = new PrescriptionServiceHandler();
+                    MenuHandler pharmacistMenuHandler = new PharmacistMenuHandler(prescriptionService);
+                    Pharmacist pharmacist = new Pharmacist(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), pharmacistMenuHandler);
+                    pharmacist.runModule();
 
 
             }

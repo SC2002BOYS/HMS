@@ -13,6 +13,11 @@ public class Inventory {
         this.medicationCount = medicationCount;
     }
 
+    public Inventory() {
+        this.medicationName = null;
+        this.medicationCount = null;
+    }
+
     public void setMedicationName(ArrayList<String> medicationName){
         this.medicationName = medicationName;
     }
