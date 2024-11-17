@@ -10,16 +10,18 @@ import java.io.IOException;
 
 public class PrescriptionServiceHandler implements PrescriptionHandler{
     private static final String CSV_FILE_PATH = "External Data/AppointmentOutcomeRecord.csv";
-    private static final String REPENISHMENT_PATHH = "External Data/ReplenishRequest.csv";
+    private static final String REPLENISHMENT_PATH = "External Data/ReplenishRequest.csv";
 
     @Override
-    public void dispenseMedication(Patient patient, LocalDate date) {
+    public void dispenseMedication(Patient patient, LocalDate date){
+        PharmUpdateInven inventoryUpdater = new PharmUpdateInven();
         ArrayList<AppointmentOutcomeRecord> outcomeRecords = patient.getAppointmentOutcomeRecords();
         boolean isUpdated = false;
 
         for (AppointmentOutcomeRecord record : outcomeRecords) {
-            if (record.getDate().equals(date)) {
+            if (record.getDate().equals(date)){
                 List<PrescriptionStatus> statuses = record.getPrescriptionStatus();
+
                 // Update all statuses to DISPENSED
                 statuses.replaceAll(ignored -> PrescriptionStatus.DISPENSED);
                 List<String> prescriptions = record.getPrescriptions();
@@ -28,6 +30,9 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
                 }
                 record.setPrescriptionStatus(statuses); // Update the record
                 isUpdated = true;
+
+                //Update inventory after dispense
+                inventoryUpdater.perform(record);
             }
         }
 
@@ -62,7 +67,7 @@ public class PrescriptionServiceHandler implements PrescriptionHandler{
         String status = "PENDING";
 
         String csvLine = date + "," + prescription + "," + status;
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(REPENISHMENT_PATHH, true))) { // Open in append mode
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(REPLENISHMENT_PATH, true))) { // Open in append mode
             writer.write(csvLine);
             writer.newLine();
             System.out.println("Prescription request for " + prescription + " sent for approval.");
