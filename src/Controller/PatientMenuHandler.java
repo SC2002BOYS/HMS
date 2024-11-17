@@ -1,5 +1,7 @@
 package Controller;
 import java.util.*;
+
+import Model.Patient;
 import Model.User;
 
 public class PatientMenuHandler implements MenuHandler{
@@ -26,7 +28,18 @@ public class PatientMenuHandler implements MenuHandler{
     @Override
     public void handleMenuOption(int choice, User user) {
         Scanner sc = new Scanner(System.in);
+        Patient patient = (Patient) user;
         switch(choice){
+
+            case 2:
+                UpdateController updateController = new UpdateController();
+                System.out.println("Enter new email: ");
+                String newEmail = sc.nextLine();
+                System.out.println("Enter new mobile number: ");
+                int newNumber = sc.nextInt();
+                IUpdate patientUpdate = new PatientUpdate(newEmail, newNumber);
+                updateController.update(patientUpdate, patient.getMedicalRecord());
+                break;
 
             case 3:
                 appointmentHandler.scheduleAppointment(user);

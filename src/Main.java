@@ -65,9 +65,7 @@ public class Main {
                 break;
 
             case PATIENT:
-                AppointmentHandler patientScheduler = new PatientScheduleHandler();
-                MenuHandler patientMenuHandler = new PatientMenuHandler(patientScheduler);
-                Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), patientMenuHandler);
+                Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID),new PatientMenuHandler(new PatientScheduleHandler()));
                 patient.runModule();
                 break;
         }
