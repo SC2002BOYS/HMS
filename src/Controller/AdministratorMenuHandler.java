@@ -9,6 +9,7 @@ import Model.User;
 import Type.Role;
 import Controller.MenuHandler;
 import View.Menu;
+import Controller.AdminUpdateInven;
 
 public class AdministratorMenuHandler implements MenuHandler {
 
@@ -24,7 +25,6 @@ public class AdministratorMenuHandler implements MenuHandler {
         this.appointmentController = appointmentController;
         this.staffController = staffController;
         this.HospitalStaffMenu = HospitalStaffMenu;
-
     }
 
 
@@ -64,9 +64,8 @@ public class AdministratorMenuHandler implements MenuHandler {
                             break;
 
                         case 5:
-
                             break;
-                    
+
                         default:
                             System.out.println("Invalid option. Please try again.");
                             continue;
@@ -81,10 +80,15 @@ public class AdministratorMenuHandler implements MenuHandler {
                 break;
 
             case 3:
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter the medication name:");
+                String medicationName = sc.next();
+                AdminUpdateInven adminUpdate = new AdminUpdateInven(medicationName);
+                break;
+            case 4:
                 replenishmentController.approveReplenishmentRequest();
                 break;
 
-                
             default:
                 System.out.println("Invalid option. Please try again.");
                
