@@ -35,9 +35,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
         System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
         String input1 = sc.nextLine().trim();
         LocalDateTime start = LocalDateTime.parse(input1,formatter);
-        System.out.print("Enter slot end date and time (format: yyyy-MM-dd HH:mm): ");
-        String input2 = sc.nextLine().trim();
-        LocalDateTime end = LocalDateTime.parse(input2,formatter);
+        LocalDateTime end = start.plusMinutes(60);
 
         if (!isTimeSlotValid(doctor, start, end)) {
             System.out.println("Invalid time slot. Please select a valid slot from the available options.");
