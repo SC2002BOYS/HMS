@@ -43,9 +43,11 @@ public class PatientUpdateTest {
         AdminUpdateInven adminUpdate = new AdminUpdateInven(medicinesToUpdate);
         adminUpdate.updateInventory();
         */
+        /*
         new ViewPatientAppt("JohnDoe");
         new ViewPastApptOutcome("JohnDoe");
         AdminUpdateInven adminUpdate = new AdminUpdateInven("Ibuprofen");
         adminUpdate.updateInventory();
+        */
     }
 }
