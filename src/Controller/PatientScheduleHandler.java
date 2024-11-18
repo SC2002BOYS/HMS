@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 public class PatientScheduleHandler implements AppointmentHandler{
     private final String APPOINTMENT_PATH = "External Data/Appointments.csv";
     private final String STAFF_PATH = "External Data/Staff_List.csv";
-    private final String SCHEDULE_PATH = "HMS/External Data/Schedule.csv";
+    private final String SCHEDULE_PATH = "External Data/Schedule.csv";
 
     @Override
     public void scheduleAppointment(User user){
