@@ -66,7 +66,7 @@ public class ScheduleController {
                     addAppointment(current);
                     updateCSVWithModifiedAppointment();
                 } else if (input.equals("N")) {
-                    current.setStatus(AppointmentStatus.DECLINED);
+                    current.setStatus(AppointmentStatus.CANCELLED);
                     updateCSVWithModifiedAppointment();
                     System.out.println("Appointment declined.");
                 }
@@ -245,7 +245,7 @@ public class ScheduleController {
     //Helper function
     private void addAppointment(Appointment appointment){
         ArrayList<Appointment> appointments = schedule.getAppointments();
-        appointment.setStatus(AppointmentStatus.ACCEPTED);
+        appointment.setStatus(AppointmentStatus.CONFIRMED);
         appointments.add(appointment);
         System.out.println("Appointment accepted");
     }

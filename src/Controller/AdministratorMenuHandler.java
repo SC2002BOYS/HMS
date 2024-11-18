@@ -83,8 +83,6 @@ public class AdministratorMenuHandler implements MenuHandler {
             case 3:
                 replenishmentController.approveReplenishmentRequest();
                 break;
-
-                
             default:
                 System.out.println("Invalid option. Please try again.");
                
