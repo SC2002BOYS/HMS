@@ -221,22 +221,6 @@ public class CSVReader {
     // CSV reader for USERS
     public static List<User> readUsers(String filePath){
 
-
-    // CSV reader for Available Slots
-    public static ArrayList<AvailableSlot> getAvailableSlots(String filePath, String doctorID){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        ArrayList<AvailableSlot> availableSlots = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-
-                // Match patientID with the external identifier (assuming values[0] is patient ID)
-                if (values[0].equals(doctorID)) {
-                    LocalDateTime startTime = LocalDateTime.parse(values[1],formatter);
-                    LocalDateTime endTime = LocalDateTime.parse(values[2],formatter);
-                    availableSlots.add(new AvailableSlot(startTime, endTime));
-
         String delimiter = ",";
         String line;
         List<User> users = new ArrayList<>();
@@ -250,6 +234,30 @@ public class CSVReader {
                     Gender gender = Gender.valueOf(values[3].toUpperCase());
                     String age = values[4];
                     users.add(new User(userID, userPass, role, gender, age));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+
+    // CSV reader for Available Slots
+    public static ArrayList<AvailableSlot> getAvailableSlots(String filePath, String doctorID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        ArrayList<AvailableSlot> availableSlots = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Match patientID with the external identifier (assuming values[0] is patient ID)
+                if (values[0].equals(doctorID)) {
+                    LocalDateTime startTime = LocalDateTime.parse(values[1],formatter);
+                    LocalDateTime endTime = LocalDateTime.parse(values[2],formatter);
+                    availableSlots.add(new AvailableSlot(startTime, endTime));
 
                 }
             }
@@ -271,9 +279,6 @@ public class CSVReader {
         } catch (IOException e) {
             System.err.println("Error reading CSV file: " + e.getMessage());
         }
-        return users;        
-    }
-
         return allEntries;
     }
 }
