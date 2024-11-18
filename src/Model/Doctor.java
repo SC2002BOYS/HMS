@@ -37,7 +37,7 @@ public class Doctor extends User{
             System.out.print("Enter your choice: ");
             int choice = new Scanner(System.in).nextInt();
 
-            if (choice == 9) {
+            if (choice == 10) {
                 exit = true;
             } else {
                 menuHandler.handleMenuOption(choice, this);

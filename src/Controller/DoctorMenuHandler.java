@@ -10,10 +10,12 @@ import java.util.Scanner;
 
 public class DoctorMenuHandler implements MenuHandler{
     private final ScheduleController scheduleController;
+    private final AppointmentOutcomeRecordController appointmentOutcomeRecordController;
 
 
     public DoctorMenuHandler(Schedule schedule){
         this.scheduleController = new ScheduleController(schedule);
+        this.appointmentOutcomeRecordController = new AppointmentOutcomeRecordController(schedule);
     }
 
     @Override
@@ -27,7 +29,8 @@ public class DoctorMenuHandler implements MenuHandler{
         System.out.println("6. Accept or Decline appointment requests");
         System.out.println("7. View upcoming appointments");
         System.out.println("8. Record appointment outcome");
-        System.out.println("9. Log out");
+        System.out.println("9. Change Password");
+        System.out.println("10:Log Out");
     }
 
     public void handleMenuOption(int choice, User doctor) {
@@ -72,6 +75,12 @@ public class DoctorMenuHandler implements MenuHandler{
                 break;
             case 8:
                 //Record Appt Outcome Error
+                appointmentOutcomeRecordController.editAppointmentOutcomeRecord();
+                break;
+            case 9:
+                System.out.print("Enter new password: ");
+                String newPass = scanner.nextLine();
+                PasswordController passChanger = new PasswordController(doctor.getUserID(), newPass);
                 break;
 
             default:
