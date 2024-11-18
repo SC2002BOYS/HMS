@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class AdminUpdateInven {
 
-    private static final String INVENTORY_FILE = "External Data/Inventory.csv";
+    private static final String INVENTORY_FILE = "HMS/External Data/Inventory.csv";
     private String medicineName;
 
     // Constructor to initialize the list of medicines
