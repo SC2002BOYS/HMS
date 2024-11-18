@@ -54,6 +54,12 @@ public class PatientMenuHandler implements MenuHandler{
             case 3:
                 appointmentHandler.scheduleAppointment(user);
                 break;
+            case 4:
+                appointmentHandler.rescheduleAppointment(user);
+                break;
+            case 5:
+                appointmentHandler.cancelAppointment(user);
+                break;
 
             case 6:
                 ViewPatientAppt viewPatientAppt = new ViewPatientAppt();
