@@ -5,15 +5,20 @@ import Model.Appointment;
 import Model.AvailableSlot;
 import Type.AppointmentStatus;
 import View.ScheduleView;
+
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class ScheduleController {
 
     private Schedule schedule;
     private ScheduleView scheduleView;
+    private final String SCHEDULE_PATH = "External Data/Schedule.csv";
+    private final String APPOINTMENT_PATH = "External Data/Appointments.csv";
 
     public ScheduleController(Schedule schedule){
         this.schedule= schedule;
@@ -41,7 +46,8 @@ public class ScheduleController {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         ArrayList<Appointment> appointmentRequests = schedule.getAppointmentRequests();
-        Appointment current = null;
+        Appointment current ;
+
 
         while (!validInput) {
             scheduleView.viewAppointmentRequests();
@@ -56,13 +62,16 @@ public class ScheduleController {
                 input = input.toUpperCase();
                 if (input.equals("Y")) {
                     removeAvailability(getAvailSlotIndex(current.getStartTime()));
+                    updateCSVWithModifiedAvailability();
                     addAppointment(current);
+                    updateCSVWithModifiedAppointment();
                 } else if (input.equals("N")) {
                     current.setStatus(AppointmentStatus.DECLINED);
+                    updateCSVWithModifiedAppointment();
                     System.out.println("Appointment declined.");
                 }
                 appointmentRequests.remove(choice-1);
-                return;
+                validInput = true;
 
             } catch (Exception e) {
                 System.out.println("Invalid format. Please try again.");
@@ -111,8 +120,21 @@ public class ScheduleController {
             }
         }
 
-        AvailableSlot newSlot = new AvailableSlot(startTime, endTime);
-        availableSlots.add(newSlot);
+        while(startTime.isBefore(endTime)){
+            LocalDateTime nextSlot = startTime.plusMinutes(60);
+            if(nextSlot.isAfter(endTime)){
+                nextSlot = endTime;
+            }
+            AvailableSlot newSlot = new AvailableSlot(startTime, nextSlot);
+            availableSlots.add(newSlot);
+            startTime = nextSlot;
+        }
+
+
+        //UpdateCSV
+        updateCSVWithModifiedAvailability();
+        System.out.println("Appointment scheduled successfully!");
+        System.out.println();
         System.out.println("Available slot added.");
     }
 
@@ -149,6 +171,7 @@ public class ScheduleController {
 
                 if(slotDurationMinutes == 0){
                     removeAvailability(choice-1);
+                    updateCSVWithModifiedAvailability();
                     System.out.println("Available slot updated.");
                     return;
                 }
@@ -171,7 +194,23 @@ public class ScheduleController {
                         return;
                     }
                 }
-                currentSlot.setEndTime(endTime);
+
+                if(slotDurationMinutes > 60){
+                    startTime = startTime.plusMinutes(60);
+                    currentSlot.setEndTime(startTime);
+                    while(startTime.isBefore(endTime)){
+                        LocalDateTime nextSlot = startTime.plusMinutes(60);
+                        if(nextSlot.isAfter(endTime)){
+                            nextSlot = endTime;
+                        }
+                        AvailableSlot newSlot = new AvailableSlot(startTime, nextSlot);
+                        availableSlots.add(newSlot);
+                        startTime = nextSlot;
+                    }
+                }
+                else
+                    currentSlot.setEndTime(endTime);
+                updateCSVWithModifiedAvailability();
                 System.out.println("Available slot updated.");
                 validInput = true;
             } catch (Exception e) {
@@ -182,10 +221,11 @@ public class ScheduleController {
 
     }
 
+    //Helper function
     private void removeAvailability(int index){
-        schedule.getAvailableSlots().remove(index);
+            schedule.getAvailableSlots().remove(index);
     }
-
+    //Helper function
     private int getAvailSlotIndex(LocalDateTime startTime){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         ArrayList<AvailableSlot> availableSlots = schedule.getAvailableSlots();
@@ -202,24 +242,100 @@ public class ScheduleController {
         return -1;
     }
 
-
-
-    public void addAppointment(String userID, LocalDateTime startTime, LocalDateTime endTime){
-        ArrayList<Appointment> appointments = schedule.getAppointments();
-        appointments.add(new Appointment(userID, startTime, endTime, AppointmentStatus.ACCEPTED));
-        System.out.println("Appointment accepted");
-    }
-
-    public void addAppointment(Appointment appointment){
+    //Helper function
+    private void addAppointment(Appointment appointment){
         ArrayList<Appointment> appointments = schedule.getAppointments();
         appointment.setStatus(AppointmentStatus.ACCEPTED);
         appointments.add(appointment);
         System.out.println("Appointment accepted");
     }
 
-    public void addAppointmentRequest(Appointment appointment){
-        schedule.getAppointmentRequests().add(appointment);
+    private void updateCSVWithModifiedAvailability() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        ArrayList<AvailableSlot> availableSlots = schedule.getAvailableSlots();
+
+        // Step 1: Read all data from the CSV into memory
+        ArrayList<String> updatedEntries = new ArrayList<>();
+        ArrayList<String> allEntries;
+        allEntries = CSVReader.getAllAvailSlotsEntries(SCHEDULE_PATH);
+
+        // Step 2: Copy other doctor's available slots
+        for(int i = 0; i<allEntries.size();i++){
+            String[] values = allEntries.get(i).split(",");
+            if(!(values[0].equals(schedule.getDoctorID()))) {
+                updatedEntries.add(allEntries.get(i));
+            }
+
+        }
+
+        //Sort the current Available Slot array
+        Collections.sort(availableSlots, new TimeSlotComparator());
+
+        // Step 3: Append current doctor's available slots
+
+        for(int j = 0 ; j < availableSlots.size(); j++){
+            String startTime = availableSlots.get(j).getStartTime().format(formatter);
+            String doctorID = schedule.getDoctorID();
+
+            // Create a new entry for the updated availability
+            String newCsvEntry = doctorID + "," + startTime + "," + availableSlots.get(j).getEndTime().format(formatter);
+
+            updatedEntries.add(newCsvEntry);
+        }
+
+        // Step 4: Write the updated list back to the CSV file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(SCHEDULE_PATH))) {
+            for (String entry : updatedEntries) {
+                writer.write(entry); // Write each updated line back to the file
+                writer.newLine();
+            }
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println("Error writing to CSV file: " + e.getMessage());
+        }
     }
+
+    private void updateCSVWithModifiedAppointment() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        ArrayList<Appointment> appointmentRequests = schedule.getAppointmentRequests();
+
+        // Step 1: Read all data from the CSV into memory
+        ArrayList<String> updatedEntries = new ArrayList<>();
+        ArrayList<String> allEntries;
+        allEntries = CSVReader.getAllAppointmentsEntries(APPOINTMENT_PATH);
+
+        // Step 2: Copy entries that are not current doctor's appointment requests
+        for(int i = 0; i<allEntries.size();i++){
+            String[] values = allEntries.get(i).split(",");
+            if(!(values[4].equals("PENDING")) || !(values[1].equals(schedule.getDoctorID()))) {
+                updatedEntries.add(allEntries.get(i));
+            }
+
+        }
+
+        for(int j = 0 ; j < appointmentRequests.size(); j++){
+            String startTime = appointmentRequests.get(j).getStartTime().format(formatter);
+            String doctorID = appointmentRequests.get(j).getDoctorID();
+            String patientID = appointmentRequests.get(j).getPatientID();
+
+            // Create a new entry for the updated availability
+            String newCsvEntry = patientID + "," + doctorID + "," + startTime + "," + appointmentRequests.get(j).getEndTime().format(formatter) + "," + appointmentRequests.get(j).getStatus();
+
+            updatedEntries.add(newCsvEntry);
+        }
+
+        // Step 4: Write the updated list back to the CSV file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(APPOINTMENT_PATH))) {
+            for (String entry : updatedEntries) {
+                writer.write(entry); // Write each updated line back to the file
+                writer.newLine();
+            }
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println("Error writing to CSV file: " + e.getMessage());
+        }
+    }
+
 
 
 }

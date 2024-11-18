@@ -1,6 +1,7 @@
 import java.util.*;
 
 import Controller.*;
+import Model.Doctor;
 import Model.Patient;
 import Model.Pharmacist;
 import Model.Administrator;
@@ -88,6 +89,12 @@ public class Main {
                 Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID),new PatientMenuHandler(new PatientScheduleHandler()));
                 patient.runModule();
                 break;
+
+
+            case DOCTOR:
+                Doctor doctor = new Doctor(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
+                doctor.runModule();
+
             
             case ADMIN:
                 IStaffController staffController= new StaffController();
@@ -98,6 +105,7 @@ public class Main {
                 Administrator admin = new Administrator(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), adminMenuHandler);
                 admin.runModule();
                 break;
+
         }
     }
 }

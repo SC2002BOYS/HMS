@@ -21,7 +21,7 @@ public class ScheduleView {
         ArrayList<Appointment> appointments = schedule.getAppointments();
         int i = 1;
         for(Appointment appointment : appointments){
-            System.out.println(i + "." + appointment.getStartTime().format(formatter) + " to " + appointment.getEndTime().format(formatter));
+            System.out.println(i + ". " + appointment.getPatientID() + " , " + appointment.getStartTime().format(formatter) + " to " + appointment.getEndTime().format(formatter));
             i++;
         }
     }
@@ -43,7 +43,7 @@ public class ScheduleView {
         ArrayList<Appointment> appointmentRequests = schedule.getAppointmentRequests();
         int i = 1;
         for(Appointment appointmentRequest : appointmentRequests){
-            System.out.println(i + "." + appointmentRequest.getStartTime().format(formatter) + " to " + appointmentRequest.getEndTime().format(formatter) );
+            System.out.println(i + ". " + appointmentRequest.getPatientID()+ " , " + appointmentRequest.getStartTime().format(formatter) + " to " + appointmentRequest.getEndTime().format(formatter) );
             i++;
         }
 

@@ -8,6 +8,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import Model.AvailableSlot;
 import Model.MedicalRecord;
 import Model.User;
 import Model.AppointmentOutcomeRecord;
@@ -68,7 +70,7 @@ public class CSVReader {
                     LocalDateTime endTime = LocalDateTime.parse(values[3],formatter);
                     AppointmentStatus status = AppointmentStatus.valueOf(values[4].toUpperCase());
 
-                    appointments.add(new Appointment(doctor, startTime, endTime, status));
+                    appointments.add(new Appointment(patientID,doctor, startTime, endTime, status));
                 }
             }
         } catch (IOException e) {
@@ -76,6 +78,49 @@ public class CSVReader {
         }
         return appointments;
     }
+
+    // CSV reader for all Appointments entries
+    public static ArrayList<String> getAllAppointmentsEntries(String filePath){
+        ArrayList<String> allEntries = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                allEntries.add(line); // Add each line to the list
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading CSV file: " + e.getMessage());
+        }
+
+        return allEntries;
+    }
+
+
+    //CSV reader for appointment requests for doctors
+    public static ArrayList<Appointment> getAppointmentRequests(String filePath, String doctorID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        ArrayList<Appointment> appointmentRequests = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Match patientID with the external identifier (assuming values[0] is patient ID)
+                if (values[1].equals(doctorID) && (AppointmentStatus.valueOf(values[4]) == AppointmentStatus.PENDING)) {
+                    String patient = values[0];
+                    String doctor = values[1];
+                    LocalDateTime startTime = LocalDateTime.parse(values[2],formatter);
+                    LocalDateTime endTime = LocalDateTime.parse(values[3],formatter);
+                    AppointmentStatus status = AppointmentStatus.valueOf(values[4].toUpperCase());
+
+                    appointmentRequests.add(new Appointment(patient, doctor, startTime, endTime, status));
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return appointmentRequests;
+    }
+
 
     // CSV reader for Appointment Outcome Records
     public static ArrayList<AppointmentOutcomeRecord> getAppointmentOutcomeRecords(String filePath, String patientID) {
@@ -176,6 +221,22 @@ public class CSVReader {
     // CSV reader for USERS
     public static List<User> readUsers(String filePath){
 
+
+    // CSV reader for Available Slots
+    public static ArrayList<AvailableSlot> getAvailableSlots(String filePath, String doctorID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        ArrayList<AvailableSlot> availableSlots = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+
+                // Match patientID with the external identifier (assuming values[0] is patient ID)
+                if (values[0].equals(doctorID)) {
+                    LocalDateTime startTime = LocalDateTime.parse(values[1],formatter);
+                    LocalDateTime endTime = LocalDateTime.parse(values[2],formatter);
+                    availableSlots.add(new AvailableSlot(startTime, endTime));
+
         String delimiter = ",";
         String line;
         List<User> users = new ArrayList<>();
@@ -189,12 +250,30 @@ public class CSVReader {
                     Gender gender = Gender.valueOf(values[3].toUpperCase());
                     String age = values[4];
                     users.add(new User(userID, userPass, role, gender, age));
+
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return availableSlots;
+
+    }
+
+    public static ArrayList<String> getAllAvailSlotsEntries(String filePath){
+        ArrayList<String> allEntries = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                allEntries.add(line); // Add each line to the list
+            }
+        } catch (IOException e) {
+            System.err.println("Error reading CSV file: " + e.getMessage());
+        }
         return users;        
     }
 
+        return allEntries;
+    }
 }
