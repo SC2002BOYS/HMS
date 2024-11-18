@@ -1,36 +1,47 @@
 package Model;
 
+import Controller.DoctorMenuHandler;
+import Controller.MenuHandler;
 import View.DoctorMenu;
 import Type.Role;
 import Type.Gender;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Doctor extends User{
 
-    private ArrayList<MedicalRecord> medicalRecords;
+
     private Schedule schedule;
+    private final MenuHandler menuHandler;
 
     private ArrayList<Patient> patients;
     private final DoctorMenu menu = new DoctorMenu();
 
-    public Doctor(String userID,String userPass, Role role,Gender gender,String age, ArrayList<MedicalRecord> medicalRecords){
-        super(userID, userPass, role, gender, age);
-        this.medicalRecords = medicalRecords;
-        this.schedule = new Schedule();
+    public Doctor(String userID,String userPass,Gender gender,String age) {
+        super(userID, userPass, Role.DOCTOR, gender, age);
+        this.schedule = new Schedule(userID);
+        this.menuHandler = new DoctorMenuHandler(this.schedule);
     }
-
-    //To print the doctor menu
-    public void printMenu(){
-        this.menu.printMenu();
-    }
-
-    //Get medical records
-    public ArrayList<MedicalRecord> getMedicalRecords() { return this.medicalRecords; }
 
     //Get schedule
     public Schedule getSchedule(){ return this.schedule; }
 
     //Get patients
     //public ArrayList<Patient> getPatients(){ return this.patients; }
+
+    public void runModule() {
+        boolean exit = false;
+        while (!exit) {
+            menuHandler.displayMenu();
+            System.out.print("Enter your choice: ");
+            int choice = new Scanner(System.in).nextInt();
+
+            if (choice == 9) {
+                exit = true;
+            } else {
+                menuHandler.handleMenuOption(choice, this);
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 import java.util.*;
 
 import Controller.*;
+import Model.Doctor;
 import Model.Patient;
 import Model.Pharmacist;
 import Model.User;
@@ -70,6 +71,10 @@ public class Main {
                 Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), patientMenuHandler);
                 patient.runModule();
                 break;
+
+            case DOCTOR:
+                Doctor doctor = new Doctor(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
+                doctor.runModule();
         }
     }
 }
