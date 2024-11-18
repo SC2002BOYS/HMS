@@ -11,8 +11,10 @@ import java.util.List;
 
 import Model.AvailableSlot;
 import Model.MedicalRecord;
+import Model.User;
 import Model.AppointmentOutcomeRecord;
 import Model.Appointment;
+import Type.Role;
 import Type.Gender;
 import Type.BloodType;
 import Type.AppointmentStatus;
@@ -216,6 +218,9 @@ public class CSVReader {
         return null; // Return null if the patient ID is not found
     }
 
+    // CSV reader for USERS
+    public static List<User> readUsers(String filePath){
+
 
     // CSV reader for Available Slots
     public static ArrayList<AvailableSlot> getAvailableSlots(String filePath, String doctorID){
@@ -231,11 +236,27 @@ public class CSVReader {
                     LocalDateTime startTime = LocalDateTime.parse(values[1],formatter);
                     LocalDateTime endTime = LocalDateTime.parse(values[2],formatter);
                     availableSlots.add(new AvailableSlot(startTime, endTime));
+
+        String delimiter = ",";
+        String line;
+        List<User> users = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(delimiter);
+                if (values.length == 5) {
+                    String userID = values[0];
+                    String userPass = values[1];
+                    Role role = Role.valueOf(values[2].toUpperCase());
+                    Gender gender = Gender.valueOf(values[3].toUpperCase());
+                    String age = values[4];
+                    users.add(new User(userID, userPass, role, gender, age));
+
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return availableSlots;
 
     }
@@ -250,6 +271,8 @@ public class CSVReader {
         } catch (IOException e) {
             System.err.println("Error reading CSV file: " + e.getMessage());
         }
+        return users;        
+    }
 
         return allEntries;
     }

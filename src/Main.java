@@ -4,8 +4,11 @@ import Controller.*;
 import Model.Doctor;
 import Model.Patient;
 import Model.Pharmacist;
+import Model.Administrator;
 import Model.User;
 import Type.Role;
+import View.Menu;
+import View.HospitalStaffMenu;
 
 public class Main {
     public static void main(String[] args){
@@ -41,6 +44,7 @@ public class Main {
         String userPass = "";
 
         boolean loggedIn = false;
+        boolean length = false;
         while (!loggedIn) {
             System.out.println("Enter your userID: ");
             userID = sc.next();
@@ -51,6 +55,22 @@ public class Main {
                 User user = new User(userID, userPass, role, CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 System.out.println("Login Successful:" + " " + role + " " + user.getUserID());
                 System.out.println();
+                if(userPass.equals("password123")) {
+                    System.out.println("Initial login! Please set a strong password");
+                    String newPW = null;
+                    while (!length) {
+                        System.out.print("Enter your new password: ");
+                        newPW = sc.next();
+                        if (newPW.length() <= 11) {
+                            System.out.println("Password length too short, enter stronger password");
+                        } else {
+                            length = true;
+                        }
+                    }
+
+                    PasswordController changePW = new PasswordController(userID, newPW);
+
+                }
                 loggedIn = true;
 
             } else {
@@ -66,15 +86,26 @@ public class Main {
                 break;
 
             case PATIENT:
-                AppointmentHandler patientScheduler = new PatientScheduleHandler();
-                MenuHandler patientMenuHandler = new PatientMenuHandler(patientScheduler);
-                Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), patientMenuHandler);
+                Patient patient = new Patient(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID),new PatientMenuHandler(new PatientScheduleHandler()));
                 patient.runModule();
                 break;
+
 
             case DOCTOR:
                 Doctor doctor = new Doctor(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID));
                 doctor.runModule();
+
+            
+            case ADMIN:
+                IStaffController staffController= new StaffController();
+                IAppointmentController appointmentController = new AppointmentController();
+                IReplenishmentController replenishmentController = new ReplenishmentController();
+                Menu hospitalStaffMenu = new HospitalStaffMenu();
+                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(replenishmentController,appointmentController,staffController,hospitalStaffMenu);
+                Administrator admin = new Administrator(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), adminMenuHandler);
+                admin.runModule();
+                break;
+
         }
     }
 }

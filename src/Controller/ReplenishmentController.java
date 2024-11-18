@@ -14,10 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ReplenishmentController{
+public class ReplenishmentController implements IReplenishmentController {
 
     private static final String CSV_FILE_PATH = "External Data/replenishment_list.csv";
     public void approveReplenishmentRequest() {
+
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the date of the replenishment request (YYYY-MM-DD):");
@@ -58,5 +59,7 @@ public class ReplenishmentController{
         } else {
             System.out.println("Replenishment request not found or already approved.");
         }
+
+
     }
 }

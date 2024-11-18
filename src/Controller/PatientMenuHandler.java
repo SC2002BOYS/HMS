@@ -1,6 +1,12 @@
 package Controller;
 import java.util.*;
+
+import Model.Patient;
 import Model.User;
+import View.ViewMedicalRecord;
+import View.ViewPastApptOutcome;
+import View.ViewPatientAppt;
+import View.ViewPatientDetails;
 
 public class PatientMenuHandler implements MenuHandler{
     private final AppointmentHandler appointmentHandler;
@@ -26,10 +32,50 @@ public class PatientMenuHandler implements MenuHandler{
     @Override
     public void handleMenuOption(int choice, User user) {
         Scanner sc = new Scanner(System.in);
+        Patient patient = (Patient) user;
         switch(choice){
+
+            case 1:
+                System.out.println("Medical Record of " + user.getUserID());
+                ViewMedicalRecord viewRecord = new ViewMedicalRecord();
+                viewRecord.displayRecord(patient.getMedicalRecord());
+                break;
+
+            case 2:
+                UpdateController updateController = new UpdateController();
+                System.out.print("Enter new email: ");
+                String newEmail = sc.nextLine();
+                System.out.print("Enter new mobile number: ");
+                int newNumber = sc.nextInt();
+                IUpdate patientUpdate = new PatientUpdate(newEmail, newNumber);
+                updateController.update(patientUpdate, patient.getMedicalRecord());
+                break;
 
             case 3:
                 appointmentHandler.scheduleAppointment(user);
+                break;
+            case 4:
+                appointmentHandler.rescheduleAppointment(user);
+                break;
+            case 5:
+                appointmentHandler.cancelAppointment(user);
+                break;
+
+            case 6:
+                ViewPatientAppt viewPatientAppt = new ViewPatientAppt();
+                viewPatientAppt.view(user.getUserID());
+                break;
+
+            case 7:
+                ViewPastApptOutcome viewPast = new ViewPastApptOutcome();
+                viewPast.view(user.getUserID());
+                break;
+
+
+            case 8:
+                System.out.print("Enter new password: ");
+                String newPass = sc.nextLine();
+                PasswordController passChanger = new PasswordController(user.getUserID(), newPass);
                 break;
 
             default:
