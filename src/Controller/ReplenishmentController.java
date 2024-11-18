@@ -16,10 +16,8 @@ import java.util.Scanner;
 
 public class ReplenishmentController implements IReplenishmentController {
 
-    private static final String CSV_FILE_PATH = "External Data/replenishment_list.csv";
+    private static final String CSV_FILE_PATH = "External Data/ReplenishRequest.csv";
     public void approveReplenishmentRequest() {
-
-
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the date of the replenishment request (YYYY-MM-DD):");
         String date = sc.next();
@@ -30,13 +28,12 @@ public class ReplenishmentController implements IReplenishmentController {
         List<String> lines = new ArrayList<>();
         boolean found = false;
 
-        // Read the existing CSV file
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] values = line.split(",");
-                if (values[0].equals(date) && values[1].equals(medicationName) && values[2].equals("Pending")) {
-                    line = date + "," + medicationName + ",Approved";
+                if (values[0].equals(date) && values[1].equals(medicationName) && values[2].equalsIgnoreCase("PENDING")) {
+                    line = date + "," + medicationName + ",APPROVED";
                     found = true;
                 }
                 lines.add(line);
@@ -60,6 +57,6 @@ public class ReplenishmentController implements IReplenishmentController {
             System.out.println("Replenishment request not found or already approved.");
         }
 
-
+      
     }
 }
