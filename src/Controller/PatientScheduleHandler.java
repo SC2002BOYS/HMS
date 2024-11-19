@@ -67,7 +67,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                 Scanner sc = new Scanner(System.in);
                 //Check user's booked schedule
                 showUserSlots(user);
-                System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
+                System.out.print("Pick the timeslot to update (format: yyyy-MM-dd HH:mm): ");
                 String input = sc.nextLine().trim();
                 LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
 
@@ -104,10 +104,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                         System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
                         String input1 = sc.nextLine().trim();
                         newStart = LocalDateTime.parse(input1, formatter);
-
-                        System.out.print("Enter slot end date and time (format: yyyy-MM-dd HH:mm): ");
-                        String input2 = sc.nextLine().trim();
-                        newEnd = LocalDateTime.parse(input2, formatter);
+                        newEnd = newStart.plusMinutes(60);
 
                         if (!isTimeSlotValid(doctorID, newStart, newEnd)) {
                             System.out.println("Invalid time slot. Please select a valid slot from the available options.");
@@ -144,7 +141,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                 Scanner sc = new Scanner(System.in);
                 //Check user's booked schedule
                 showUserSlots(user);
-                System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
+                System.out.print("Pick the timeslot to cancel (format: yyyy-MM-dd HH:mm): ");
                 String input = sc.nextLine().trim();
                 LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
 
