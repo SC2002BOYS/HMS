@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ViewInventory {
 
-    private static final String INVENTORY_FILE = "HMS/External Data/Inventory.csv";
+    private static final String INVENTORY_FILE = "External Data/Inventory.csv";
 
     public void displayInventory() {
         System.out.println("Current Inventory:");
