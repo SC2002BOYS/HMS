@@ -58,31 +58,38 @@ public class DoctorMenuHandler implements MenuHandler{
 
             case 3:
                 scheduleController.viewSchedule();
+                System.out.println();
                 break;
 
             case 4:
                 scheduleController.setAvailability();
+                System.out.println();
                 break;
 
             case 5:
                 scheduleController.updateAvailability();
+                System.out.println();
                 break;
 
             case 6:
                 scheduleController.manageAppointmentRequests();
+                System.out.println();
                 break;
 
             case 7:
                 scheduleController.viewUpcomingAppointments();
+                System.out.println();
                 break;
             case 8:
                 //Record Appt Outcome Error
                 appointmentOutcomeRecordController.editAppointmentOutcomeRecord();
+                System.out.println();
                 break;
             case 9:
                 System.out.print("Enter new password: ");
                 String newPass = scanner.nextLine();
                 PasswordController passChanger = new PasswordController(doctor.getUserID(), newPass);
+                System.out.println();
                 break;
 
             default:
