@@ -68,4 +68,8 @@ public class User{
     {
         return this.age;
     }
+
+    public void runModule(){
+        return;
+    }
 }

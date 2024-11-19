@@ -33,6 +33,7 @@ public class Pharmacist extends User{
         this.requests = requests;
     }
 
+    @Override
     public void runModule() {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in); // Create a single Scanner instance

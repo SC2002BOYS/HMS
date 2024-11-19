@@ -2,13 +2,10 @@ package Model;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import Controller.CSVReader;
 import Controller.MenuHandler;
-import View.PatientMenu;
 import Type.Gender;
 import Type.Role;
-import Controller.MenuHandler;
 
 public class Patient extends User {
 
@@ -52,6 +49,7 @@ public class Patient extends User {
         this.appointments = appointments;
     }
 
+    @Override
     public void runModule() {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
