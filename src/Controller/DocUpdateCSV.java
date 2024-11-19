@@ -3,13 +3,11 @@ package Controller;
 import Model.Appointment;
 import Model.AvailableSlot;
 import Model.Schedule;
-
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.time.*;
 
 public class DocUpdateCSV {
 
@@ -101,4 +99,39 @@ public class DocUpdateCSV {
             System.err.println("Error writing to CSV file: " + e.getMessage());
         }
     }
+
+    public static void updateScheduleInCSV(String doctorID, LocalDateTime newStart, LocalDateTime newEnd) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        File originalFile = new File(SCHEDULE_PATH);
+        StringBuilder updatedContent = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(originalFile))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                String[] details = line.split(",");
+
+                // Append all lines unchanged
+                updatedContent.append(line).append(System.lineSeparator());
+            }
+
+            // Append the new appointment to the content
+            updatedContent.append(String.format("%s,%s,%s%n",
+                    doctorID,
+                    newStart.format(formatter),
+                    newEnd.format(formatter)));
+
+        } catch (IOException e) {
+            System.out.println("Error reading the file: " + e.getMessage());
+            return;
+        }
+
+        // Write the updated content back to the same file
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(originalFile, false))) {
+            writer.write(updatedContent.toString());
+        } catch (IOException e) {
+            System.out.println("Error writing to the file: " + e.getMessage());
+        }
+    }
+
 }

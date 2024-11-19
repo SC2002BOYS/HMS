@@ -2,6 +2,6 @@ package Controller;
 
 public interface IAppointmentController {
     
-    public void viewAppointmentsDetails();
+    public void viewAppointmentsDetails(String name);
     
 }

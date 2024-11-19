@@ -74,10 +74,23 @@ public class AdministratorMenuHandler implements MenuHandler {
                 }
                 break;
             case 2:
-                appointmentController.viewAppointmentsDetails();
-                System.out.println();
-                break;
 
+            ViewAllPatients patients = new ViewAllPatients();
+            boolean hasPatients = patients.printAllPatients();
+            if (!hasPatients) {
+                System.out.println("No appointment details.");
+                break;
+            }
+            Scanner s = new Scanner(System.in);
+            while (true) {
+                System.out.println("Enter the patient name to view the appointment details (or enter 1 to exit):");
+                String patientName = s.next();
+                if (patientName.equals("1")) {
+                    break;
+                }
+                appointmentController.viewAppointmentsDetails(patientName);
+            }
+            break;
             case 3:
             while (true) {
                 Menu mediciMenu = new MedicineInventoryMenu();
@@ -97,6 +110,7 @@ public class AdministratorMenuHandler implements MenuHandler {
                         IAdminUpdateInven adminUpdate = new AdminUpdateInven(medicationName);
                         adminUpdate.updateInventory();
                         System.out.println();
+
                         break;
                     case 3:
                         break; // Break out of the inner switch case
@@ -109,7 +123,6 @@ public class AdministratorMenuHandler implements MenuHandler {
                 }
             }
             break;
-
             case 4:
 
                 if (replenishmentController.printPendingRequests()) {
