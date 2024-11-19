@@ -35,15 +35,23 @@ public class Pharmacist extends User{
 
     public void runModule() {
         boolean exit = false;
+        Scanner scanner = new Scanner(System.in); // Create a single Scanner instance
+
         while (!exit) {
             menuHandler.displayMenu();
             System.out.print("Enter your choice: ");
-            int choice = new Scanner(System.in).nextInt();
 
-            if (choice == 6) {
-                exit = true;
-            } else {
-                menuHandler.handleMenuOption(choice, this);
+            try {
+                int choice = scanner.nextInt(); // Attempt to read an integer
+
+                if (choice == 6) {
+                    exit = true; // Exit the loop if the choice is 5
+                } else {
+                    menuHandler.handleMenuOption(choice, this); // Handle other menu options
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter an integer.");
+                scanner.nextLine(); // Clear the invalid input from the buffer
             }
         }
     }

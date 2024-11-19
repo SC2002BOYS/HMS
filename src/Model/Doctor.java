@@ -6,6 +6,7 @@ import View.DoctorMenu;
 import Type.Role;
 import Type.Gender;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -32,15 +33,23 @@ public class Doctor extends User{
 
     public void runModule() {
         boolean exit = false;
+        Scanner scanner = new Scanner(System.in);
+
         while (!exit) {
             menuHandler.displayMenu();
             System.out.print("Enter your choice: ");
-            int choice = new Scanner(System.in).nextInt();
 
-            if (choice == 10) {
-                exit = true;
-            } else {
-                menuHandler.handleMenuOption(choice, this);
+            try {
+                int choice = scanner.nextInt(); // Read user input
+
+                if (choice == 10) {
+                    exit = true; // Exit condition
+                } else {
+                    menuHandler.handleMenuOption(choice, this); // Handle other options
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid choice.");
+                scanner.nextLine(); // Clear the invalid input from the buffer
             }
         }
     }
