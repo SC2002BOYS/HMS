@@ -7,7 +7,7 @@ import java.io.IOException;
 public class AppointmentController implements IAppointmentController {
     // Method to view appointments details
     
-    private static final String CSV_FILE_PATH = "External Data/Appointments.csv";
+    private static final String CSV_FILE_PATH = "HMS/External Data/Appointments.csv";
 
     public void viewAppointmentsDetails() {
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {

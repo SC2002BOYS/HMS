@@ -8,8 +8,8 @@ import java.util.List;
 public class StaffController implements IStaffController {
     // Method to view hospital staff
     // need to chnage logic, this is just a placeholder
-    private static final String CSV_FILE_PATH = "External Data/Staff_List.csv";
-    private static final String USERS_CSV_FILE_PATH = "External Data/Users.csv";
+    private static final String CSV_FILE_PATH = "HMS/External Data/Staff_List.csv";
+    private static final String USERS_CSV_FILE_PATH = "HMS/External Data/Users.csv";
 
     public void viewHospitalStaff() {
         System.out.println("Viewing hospital staff...");

@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AdminUpdateInven {
+public class AdminUpdateInven  implements IAdminUpdateInven {
 
     private static final String INVENTORY_FILE = "External Data/Inventory.csv";
     private String medicineName;
@@ -37,7 +37,7 @@ public class AdminUpdateInven {
     }
 
     // Method to load inventory data from the CSV file
-    private Map<String, Integer> loadInventory() {
+    public Map<String, Integer> loadInventory() {
         Map<String, Integer> inventory = new HashMap<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(INVENTORY_FILE))) {
             String line;
@@ -56,7 +56,7 @@ public class AdminUpdateInven {
     }
 
     // Method to save updated inventory data back to the CSV file
-    private void saveInventory(Map<String, Integer> inventory) {
+    public void saveInventory(Map<String, Integer> inventory) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(INVENTORY_FILE))) {
             for (Map.Entry<String, Integer> entry : inventory.entrySet()) {
                 writer.write(entry.getKey() + "," + entry.getValue());

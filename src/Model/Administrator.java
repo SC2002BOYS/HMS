@@ -58,8 +58,7 @@ public class Administrator extends User{
                         {
                                 menuHandler.handleMenuOption(choice, this);
                         }
-                }
-                
+                }       
         }
         
     }
