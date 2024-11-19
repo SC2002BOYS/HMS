@@ -1,5 +1,7 @@
 package Controller;
 import java.util.*;
+
+import Model.MedicalRecord;
 import Model.User;
 import View.*;
 
@@ -23,6 +25,7 @@ public class AdministratorMenuHandler implements MenuHandler {
         System.out.println("2. View appointment details");
         System.out.println("3. View and Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
+        System.out.println("5. Update Medical Record");
         System.out.println("5. Log out");
     }
 
@@ -114,7 +117,15 @@ public class AdministratorMenuHandler implements MenuHandler {
                 }
                 System.out.println();
                 break;
-
+            case 5:
+                System.out.println("Enter the patient to De-active");
+                Scanner s = new Scanner(System.in);
+                String patientID = s.next();
+                MedicalRecord record = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", patientID);
+                IUpdate adminUpdate = new AdminUpdateMed();
+                UpdateController controller = new UpdateController();
+                controller.update(adminUpdate, record);
+                break;
             default:
                 System.out.println("Invalid option. Please try again.");
                

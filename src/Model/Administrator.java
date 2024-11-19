@@ -57,7 +57,7 @@ public class Administrator extends User{
                 try {
                     int choice = scanner.nextInt(); // Attempt to read an integer
 
-                    if (choice == 5) {
+                    if (choice == 7) {
                         exit = true; // Exit the loop if the choice is 5
                     } else {
                         menuHandler.handleMenuOption(choice, this); // Handle other menu options
