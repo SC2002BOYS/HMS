@@ -33,6 +33,7 @@ public class PatientMenuHandler implements MenuHandler{
     public void handleMenuOption(int choice, User user) {
         Scanner sc = new Scanner(System.in);
         Patient patient = (Patient) user;
+        ViewPatientDetails details;
         switch(choice){
 
             case 1:
@@ -62,13 +63,13 @@ public class PatientMenuHandler implements MenuHandler{
                 break;
 
             case 6:
-                ViewPatientAppt viewPatientAppt = new ViewPatientAppt();
-                viewPatientAppt.view(user.getUserID());
+                details = new ViewPatientAppt(user.getUserID());
+                details.view();
                 break;
 
             case 7:
-                ViewPastApptOutcome viewPast = new ViewPastApptOutcome();
-                viewPast.view(user.getUserID());
+                details = new ViewPastApptOutcome(user.getUserID());
+                details.view();
                 break;
 
 
