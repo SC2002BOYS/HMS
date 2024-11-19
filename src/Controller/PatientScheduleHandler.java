@@ -17,8 +17,6 @@ public class PatientScheduleHandler implements AppointmentHandler{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         Scanner sc = new Scanner(System.in);
         //Select a doctor
-        System.out.println("List of Doctors");
-        System.out.println();
         showDoctors();
         System.out.print("Enter Doctor Name from above list: ");
         String doctor = sc.nextLine();
@@ -89,9 +87,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
             System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
             String input1 = sc.nextLine().trim();
             LocalDateTime newStart = LocalDateTime.parse(input1,formatter);
-            System.out.print("Enter slot end date and time (format: yyyy-MM-dd HH:mm): ");
-            String input2 = sc.nextLine().trim();
-            LocalDateTime newEnd = LocalDateTime.parse(input2,formatter);
+            LocalDateTime newEnd = newStart.plusMinutes(60);
             
             if (!isTimeSlotValid(doctorID, newStart, newEnd)) {
                 System.out.println("Invalid time slot. Please select a valid slot from the available options.");
@@ -121,7 +117,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
         Scanner sc = new Scanner(System.in);
         //Check user's booked schedule
         showUserSlots(user);
-        System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
+        System.out.print("Pick the timeslot to cancel (format: yyyy-MM-dd HH:mm): ");
         String input = sc.nextLine().trim();
         LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
 
@@ -282,7 +278,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
             System.out.println("----------------");
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                if (details.length >= 2 && "DOCTOR".equalsIgnoreCase(details[1].trim())) {
+                if (details.length >= 2 && "DOCTOR".equalsIgnoreCase(details[2].trim())) {
                     System.out.println("Doctor " + details[0]);
                     System.out.println("----------------");
                     System.out.println();
@@ -371,7 +367,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                if (details[0].equals(doctorID) && "DOCTOR".equalsIgnoreCase(details[1].trim())) {
+                if (details[0].equals(doctorID) && "DOCTOR".equalsIgnoreCase(details[2].trim())) {
                     return true;
                 }
             }
