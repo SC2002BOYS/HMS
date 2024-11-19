@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class ReplenishmentController implements IReplenishmentController {
 
-    private static final String CSV_FILE_PATH = "HMS/External Data/ReplenishRequest.csv";
+    private static final String CSV_FILE_PATH = "External Data/ReplenishRequest.csv";
 
     public boolean printPendingRequests() {
         boolean hasPending = false;
