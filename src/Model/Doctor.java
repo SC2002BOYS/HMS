@@ -2,7 +2,6 @@ package Model;
 
 import Controller.DoctorMenuHandler;
 import Controller.MenuHandler;
-import View.DoctorMenu;
 import Type.Role;
 import Type.Gender;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class Doctor extends User{
     private final MenuHandler menuHandler;
 
     private ArrayList<Patient> patients;
-    private final DoctorMenu menu = new DoctorMenu();
 
     public Doctor(String userID,String userPass,Gender gender,String age) {
         super(userID, userPass, Role.DOCTOR, gender, age);
@@ -31,6 +29,7 @@ public class Doctor extends User{
     //Get patients
     //public ArrayList<Patient> getPatients(){ return this.patients; }
 
+    @Override
     public void runModule() {
         boolean exit = false;
         Scanner scanner = new Scanner(System.in);
