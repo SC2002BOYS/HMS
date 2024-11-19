@@ -39,21 +39,11 @@ public class DoctorMenuHandler implements MenuHandler{
         switch (choice) {
             case 1:
                 ViewPatientRecords viewPatientRecords = new ViewPatientRecords(doctor.getUserID());
-//                System.out.print("Enter Patient ID: ");
-//                String patientID = scanner.next();
-//                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID), CSVReader.getGender("External Data/Users.csv", patientID), CSVReader.getAge("External Data/Users.csv", patientID), new PatientMenuHandler(new PatientScheduleHandler()));
-//                //prescriptionHandler.viewPatientRecords(patient);
                 break;
 
             case 2:
-//                System.out.print("Enter Patient ID: ");
-//                String patientIDForDispense = scanner.next();
-//
-//                Patient patientForDispense = new Patient(patientIDForDispense, CSVReader.getPassword("External Data/AppointmentOutcomeRecord.csv",patientIDForDispense), CSVReader.getGender("External Data/Users.csv", patientIDForDispense), CSVReader.getAge("External Data/Users.csv", patientIDForDispense), new PatientMenuHandler(new PatientScheduleHandler()));
-//
-//                System.out.print("Enter Date (yyyy-MM-dd): ");
-//                LocalDate date = LocalDate.parse(scanner.next());
-                //prescriptionHandler.dispenseMedication(patientForDispense, date);
+                EditPatientRecords editPatientRecords = new EditPatientRecords(doctor.getUserID());
+
                 break;
 
             case 3:
@@ -76,7 +66,7 @@ public class DoctorMenuHandler implements MenuHandler{
                 scheduleController.viewUpcomingAppointments();
                 break;
             case 8:
-                //Record Appt Outcome Error
+                //Record Appointment Outcome
                 appointmentOutcomeRecordController.editAppointmentOutcomeRecord();
                 break;
             case 9:
