@@ -9,7 +9,8 @@ public class AdministratorMenu implements Menu{
         System.out.println("2. View appointment details");
         System.out.println("3. View and Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
-        System.out.println("5. Log out");
+        System.out.println("5. Update Medical Record");
+        System.out.println("6. Log out");
     }
     
 }

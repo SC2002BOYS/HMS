@@ -1,5 +1,9 @@
 package View;
 
 public abstract class ViewPatientDetails {
-    public abstract void view(String userID);
+    protected String userID;
+    public ViewPatientDetails(String userID){
+        this.userID = userID;
+    }
+    public abstract void view();
 }

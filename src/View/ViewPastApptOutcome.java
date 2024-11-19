@@ -7,7 +7,10 @@ import java.io.IOException;
 public class ViewPastApptOutcome extends ViewPatientDetails{
     private static final String APPOINTMENTS_FILE = "External Data/AppointmentOutcomeRecord.csv";
 
-    public void view(String userID) {
+    public ViewPastApptOutcome(String userID){
+        super(userID);
+    }
+    public void view() {
         System.out.println("Past Appointment Outcomes for User: " + userID);
         System.out.println("=====================================");
 

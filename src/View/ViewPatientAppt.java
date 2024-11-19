@@ -7,7 +7,10 @@ import java.io.IOException;
 public class ViewPatientAppt extends ViewPatientDetails{
     private static final String APPOINTMENTS_FILE = "External Data/Appointments.csv";
 
-    public void view(String userID) {
+    public ViewPatientAppt(String userID){
+        super(userID);
+    }
+    public void view() {
         System.out.println("Appointments for User: " + userID);
         System.out.println("=====================================");
 
