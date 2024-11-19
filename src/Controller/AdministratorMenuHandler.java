@@ -43,15 +43,19 @@ public class AdministratorMenuHandler implements MenuHandler {
                     int staffChoice = scanner.nextInt();
                     switch (staffChoice) {
                         case 1:staffController.viewHospitalStaff();
+                            System.out.println();
                             break;
 
                         case 2:staffController.addStaffMember();
+                            System.out.println();
                             break;
 
                         case 3:staffController.updateStaffMember();
+                            System.out.println();
                             break;
 
                         case 4:staffController.removeStaffMember();
+                            System.out.println();
                             break;
 
                         case 5:
@@ -68,6 +72,7 @@ public class AdministratorMenuHandler implements MenuHandler {
                 break;
             case 2:
                 appointmentController.viewAppointmentsDetails();
+                System.out.println();
                 break;
 
             case 3:
@@ -80,12 +85,15 @@ public class AdministratorMenuHandler implements MenuHandler {
                     case 1:
                         PrescriptionHandler prescriptionHandler = new PrescriptionServiceHandler();
                         prescriptionHandler.viewInventory();
+                        System.out.println();
                         break;
                     case 2:
                         Scanner sc = new Scanner(System.in);
                         System.out.println("Enter the medication name:");
                         String medicationName = sc.next();
                         IAdminUpdateInven adminUpdate = new AdminUpdateInven(medicationName);
+                        adminUpdate.updateInventory();
+                        System.out.println();
                         break;
                     case 3:
                         break; // Break out of the inner switch case
@@ -99,16 +107,12 @@ public class AdministratorMenuHandler implements MenuHandler {
             }
             break;
 
-                //Scanner sc = new Scanner(System.in);
-                //System.out.println("Enter the medication name:");
-                //String medicationName = sc.next();
-                //IAdminUpdateInven adminUpdate = new AdminUpdateInven(medicationName);
-                //break;
             case 4:
 
                 if (replenishmentController.printPendingRequests()) {
                     replenishmentController.approveReplenishmentRequest();
                 }
+                System.out.println();
                 break;
 
             default:
