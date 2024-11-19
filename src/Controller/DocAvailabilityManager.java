@@ -12,8 +12,8 @@ import java.util.Scanner;
 
 public class DocAvailabilityManager {
 
-    Schedule schedule;
-    ScheduleView scheduleView;
+    private Schedule schedule;
+    private ScheduleView scheduleView;
 
     public DocAvailabilityManager(Schedule schedule){
         this.schedule = schedule;
