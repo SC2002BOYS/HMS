@@ -119,6 +119,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                 // Update the CSV with the new details
                 if (!hasAppointmentConflict(user.getUserID(), newStart)) {
                     updateAppointmentInCSV(user.getUserID(), doctorID, startInitial, newStart, newEnd);
+                    DocUpdateCSV.updateScheduleInCSV(doctorID, startInitial, startInitial.plusMinutes(60));
                     System.out.println("Appointment rescheduled successfully!");
                     return;
                 } else {
@@ -164,6 +165,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                     continue;
                 }
 
+                DocUpdateCSV.updateScheduleInCSV(doctorID, startInitial, startInitial.plusMinutes(60));
                 removeAppointmentInCSV(user.getUserID(), doctorID, startInitial);
                 System.out.println("Appointment cancelled successfully!");
                 return;
