@@ -10,12 +10,14 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class DoctorMenuHandler implements MenuHandler{
-    private final ScheduleController scheduleController;
+    //private final ScheduleController scheduleController;
+    private final ScheduleManager scheduleManager;
     private final AppointmentOutcomeRecordController appointmentOutcomeRecordController;
 
 
     public DoctorMenuHandler(Schedule schedule){
-        this.scheduleController = new ScheduleController(schedule);
+        //this.scheduleController = new ScheduleController(schedule);
+        this.scheduleManager = new ScheduleManager(schedule);
         this.appointmentOutcomeRecordController = new AppointmentOutcomeRecordController(schedule);
     }
 
@@ -39,49 +41,44 @@ public class DoctorMenuHandler implements MenuHandler{
         switch (choice) {
             case 1:
                 ViewPatientRecords viewPatientRecords = new ViewPatientRecords(doctor.getUserID());
-//                System.out.print("Enter Patient ID: ");
-//                String patientID = scanner.next();
-//                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID), CSVReader.getGender("External Data/Users.csv", patientID), CSVReader.getAge("External Data/Users.csv", patientID), new PatientMenuHandler(new PatientScheduleHandler()));
-//                //prescriptionHandler.viewPatientRecords(patient);
                 break;
 
             case 2:
-//                System.out.print("Enter Patient ID: ");
-//                String patientIDForDispense = scanner.next();
-//
-//                Patient patientForDispense = new Patient(patientIDForDispense, CSVReader.getPassword("External Data/AppointmentOutcomeRecord.csv",patientIDForDispense), CSVReader.getGender("External Data/Users.csv", patientIDForDispense), CSVReader.getAge("External Data/Users.csv", patientIDForDispense), new PatientMenuHandler(new PatientScheduleHandler()));
-//
-//                System.out.print("Enter Date (yyyy-MM-dd): ");
-//                LocalDate date = LocalDate.parse(scanner.next());
-                //prescriptionHandler.dispenseMedication(patientForDispense, date);
+                ViewPatientRecords showPatientRecords = new ViewPatientRecords(doctor.getUserID());
+                EditPatientRecords editPatientRecords = new EditPatientRecords(doctor.getUserID());
                 break;
 
             case 3:
-                scheduleController.viewSchedule();
+                //scheduleController.viewSchedule();
+                scheduleManager.viewSchedule();
                 System.out.println();
                 break;
 
             case 4:
-                scheduleController.setAvailability();
+                //scheduleController.setAvailability();
+                scheduleManager.setAvailability();
                 System.out.println();
                 break;
 
             case 5:
-                scheduleController.updateAvailability();
+                //scheduleController.updateAvailability();
+                scheduleManager.updateAvailability();
                 System.out.println();
                 break;
 
             case 6:
-                scheduleController.manageAppointmentRequests();
+                //scheduleController.manageAppointmentRequests();
+                scheduleManager.manageAppointmentRequests();
                 System.out.println();
                 break;
 
             case 7:
-                scheduleController.viewUpcomingAppointments();
+                //scheduleController.viewUpcomingAppointments();
+                scheduleManager.viewUpcomingAppointment();
                 System.out.println();
                 break;
             case 8:
-                //Record Appt Outcome Error
+                //Record Appointment Outcome
                 appointmentOutcomeRecordController.editAppointmentOutcomeRecord();
                 System.out.println();
                 break;
