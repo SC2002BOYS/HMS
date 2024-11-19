@@ -38,10 +38,12 @@ public class AppointmentOutcomeRecordController {
 
     public void editAppointmentOutcomeRecord(){
         ArrayList<Appointment> appointments = schedule.getAppointments();
-        ScheduleController scheduleController = new ScheduleController(schedule);
+        //ScheduleController scheduleController = new ScheduleController(schedule);
+        ScheduleManager scheduleManager = new ScheduleManager(schedule);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
-        scheduleController.viewUpcomingAppointments();
+        //scheduleController.viewUpcomingAppointments();
+        scheduleManager.viewUpcomingAppointment();
         System.out.println();
         if(appointments.isEmpty())
         {

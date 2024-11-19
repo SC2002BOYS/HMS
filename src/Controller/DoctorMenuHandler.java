@@ -10,12 +10,14 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 public class DoctorMenuHandler implements MenuHandler{
-    private final ScheduleController scheduleController;
+    //private final ScheduleController scheduleController;
+    private final ScheduleManager scheduleManager;
     private final AppointmentOutcomeRecordController appointmentOutcomeRecordController;
 
 
     public DoctorMenuHandler(Schedule schedule){
-        this.scheduleController = new ScheduleController(schedule);
+        //this.scheduleController = new ScheduleController(schedule);
+        this.scheduleManager = new ScheduleManager(schedule);
         this.appointmentOutcomeRecordController = new AppointmentOutcomeRecordController(schedule);
     }
 
@@ -42,32 +44,37 @@ public class DoctorMenuHandler implements MenuHandler{
                 break;
 
             case 2:
+                ViewPatientRecords showPatientRecords = new ViewPatientRecords(doctor.getUserID());
                 EditPatientRecords editPatientRecords = new EditPatientRecords(doctor.getUserID());
-
                 break;
 
             case 3:
-                scheduleController.viewSchedule();
+                //scheduleController.viewSchedule();
+                scheduleManager.viewSchedule();
                 System.out.println();
                 break;
 
             case 4:
-                scheduleController.setAvailability();
+                //scheduleController.setAvailability();
+                scheduleManager.setAvailability();
                 System.out.println();
                 break;
 
             case 5:
-                scheduleController.updateAvailability();
+                //scheduleController.updateAvailability();
+                scheduleManager.updateAvailability();
                 System.out.println();
                 break;
 
             case 6:
-                scheduleController.manageAppointmentRequests();
+                //scheduleController.manageAppointmentRequests();
+                scheduleManager.manageAppointmentRequests();
                 System.out.println();
                 break;
 
             case 7:
-                scheduleController.viewUpcomingAppointments();
+                //scheduleController.viewUpcomingAppointments();
+                scheduleManager.viewUpcomingAppointment();
                 System.out.println();
                 break;
             case 8:

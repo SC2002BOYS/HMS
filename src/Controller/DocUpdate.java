@@ -23,7 +23,7 @@ public class DocUpdate implements IUpdate{
     }
 
     private void saveUpdatedRecord(MedicalRecord updatedRecord) {
-        String csvFile = "HMS/External Data/MedicalRecord.csv";
+        String csvFile = "External Data/MedicalRecord.csv";
         List<String[]> records = new ArrayList<>();
         boolean recordUpdated = false; // Flag to track if the record was updated
 
