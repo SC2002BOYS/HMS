@@ -14,140 +14,167 @@ public class PatientScheduleHandler implements AppointmentHandler{
 
     @Override
     public void scheduleAppointment(User user){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Scanner sc = new Scanner(System.in);
-        //Select a doctor
-        showDoctors();
-        System.out.print("Enter Doctor Name from above list: ");
-        String doctor = sc.nextLine();
 
-        if (!isDoctorValid(doctor)) {
-            System.out.println("Invalid doctor name. Please try again.");
-            return;
-        }
+        while(true) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            Scanner sc = new Scanner(System.in);
+            //Select a doctor
+            showDoctors();
+            System.out.print("Enter Doctor Name from above list: ");
+            String doctor = sc.nextLine();
 
-        //Select time slot
-        System.out.println("Choose a timeslot");
-        System.out.println();
-        showAvailableSlots(doctor);
-        System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
-        String input1 = sc.nextLine().trim();
-        LocalDateTime start = LocalDateTime.parse(input1,formatter);
-        LocalDateTime end = start.plusMinutes(60);
+            if (!isDoctorValid(doctor)) {
+                System.out.println("Invalid doctor name. Please try again.");
+                continue;
+            }
+            while(true) {
+                try {
+                    //Select time slot
+                    System.out.println("Choose a timeslot");
+                    System.out.println();
+                    showAvailableSlots(doctor);
+                    System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
+                    String input1 = sc.nextLine().trim();
+                    LocalDateTime start = LocalDateTime.parse(input1, formatter);
+                    LocalDateTime end = start.plusMinutes(60);
 
-        if (!isTimeSlotValid(doctor, start, end)) {
-            System.out.println("Invalid time slot. Please select a valid slot from the available options.");
-            return;
-        }
+                    if (!isTimeSlotValid(doctor, start, end)) {
+                        System.out.println("Invalid time slot. Please select a valid slot from the available options.");
+                        return;
+                    }
 
-        //Add request to appointment csv
-        if(!hasAppointmentConflict(user.getUserID(), start)){
-            writeTOCSV(user.getUserID(),doctor, start, end);
-            System.out.println("Appointment scheduled successfully!");
-            System.out.println();
-        }
-        else{
-            System.out.println("There is an appointment conflict!");
+                    //Add request to appointment csv
+                    if (!hasAppointmentConflict(user.getUserID(), start)) {
+                        writeTOCSV(user.getUserID(), doctor, start, end);
+                        System.out.println("Appointment scheduled successfully!");
+                        System.out.println();
+                        return;
+                    } else {
+                        System.out.println("There is an appointment conflict!");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid date time and format. Please try again");
+                }
+            }
         }
     }
 
     @Override
     public void rescheduleAppointment(User user){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Scanner sc = new Scanner(System.in);
-        //Check user's booked schedule
-        showUserSlots(user);
-        System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
-        String input = sc.nextLine().trim();
-        LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
+        while(true) {
+            try {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                Scanner sc = new Scanner(System.in);
+                //Check user's booked schedule
+                showUserSlots(user);
+                System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
+                String input = sc.nextLine().trim();
+                LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
 
-        
-        try(BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENT_PATH))) {
-            String line;
-            String doctorID = null;
-            // Find the appointment to reschedule
-            while ((line = reader.readLine()) != null) {
-                String[] details = line.split(",");
-                if (details.length >= 4 && user.getUserID().equals(details[0]) &&
-                        LocalDateTime.parse(details[2].trim(), formatter).equals(startInitial)) {
-                    doctorID = details[1];
-                    break;
+
+                BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENT_PATH));
+                String line;
+                String doctorID = null;
+                // Find the appointment to reschedule
+                while ((line = reader.readLine()) != null) {
+                    String[] details = line.split(",");
+                    if (details.length >= 4 && user.getUserID().equals(details[0]) &&
+                            LocalDateTime.parse(details[2].trim(), formatter).equals(startInitial)) {
+                        doctorID = details[1];
+                        break;
+                    }
                 }
-            }
 
-            if(doctorID == null){
-                System.out.println("No matching appointment found to reschedule.");
-                return;
-            }
+                if (doctorID == null) {
+                    System.out.println("No matching appointment found to reschedule.");
+                    continue;
+                }
 
-            // Select time slot
-            System.out.println("Choose a new timeslot");
-            System.out.println();
-            showAvailableSlots(doctorID);
-            System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
-            String input1 = sc.nextLine().trim();
-            LocalDateTime newStart = LocalDateTime.parse(input1,formatter);
-            LocalDateTime newEnd = newStart.plusMinutes(60);
-            
-            if (!isTimeSlotValid(doctorID, newStart, newEnd)) {
-                System.out.println("Invalid time slot. Please select a valid slot from the available options.");
-                return;
+
+                LocalDateTime newStart = null;
+                LocalDateTime newEnd = null;
+                // Select time slot
+                while (newStart == null || newEnd == null) {
+                    try {
+                        System.out.println("Choose a new timeslot");
+                        System.out.println();
+
+                        showAvailableSlots(doctorID); //Showing doctor available slots
+
+                        System.out.print("Enter slot start date and time (format: yyyy-MM-dd HH:mm): ");
+                        String input1 = sc.nextLine().trim();
+                        newStart = LocalDateTime.parse(input1, formatter);
+
+                        System.out.print("Enter slot end date and time (format: yyyy-MM-dd HH:mm): ");
+                        String input2 = sc.nextLine().trim();
+                        newEnd = LocalDateTime.parse(input2, formatter);
+
+                        if (!isTimeSlotValid(doctorID, newStart, newEnd)) {
+                            System.out.println("Invalid time slot. Please select a valid slot from the available options.");
+                            newStart = null; // Reset to force re-entry
+                            newEnd = null; // Reset to force re-entry
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Invalid date time and format. Please try again");
+                    }
+                }
+
+                // Update the CSV with the new details
+                if (!hasAppointmentConflict(user.getUserID(), newStart)) {
+                    updateAppointmentInCSV(user.getUserID(), doctorID, startInitial, newStart, newEnd);
+                    System.out.println("Appointment rescheduled successfully!");
+                    return;
+                } else {
+                    System.out.println("There is an appointment conflict!");
+
+                }
+            } catch(Exception e){
+                System.out.println("Invalid date time and format. Please try again");
+
             }
-            
-            // Update the CSV with the new details
-            if(!hasAppointmentConflict(user.getUserID(), newStart)){
-                updateAppointmentInCSV(user.getUserID(), doctorID, startInitial, newStart, newEnd);
-                System.out.println("Appointment rescheduled successfully!");
-            }
-            else{
-                System.out.println("There is an appointment conflict!");
-            }            
         }
-        catch(IOException e){
-            System.err.println("Error reading appointments: " + e.getMessage());            
-        }
-        catch(Exception e){
-            System.err.println("Error processing schedule data: " + e.getMessage());            
-        }        
     }
 
     @Override
     public void cancelAppointment(User user){
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        Scanner sc = new Scanner(System.in);
-        //Check user's booked schedule
-        showUserSlots(user);
-        System.out.print("Pick the timeslot to cancel (format: yyyy-MM-dd HH:mm): ");
-        String input = sc.nextLine().trim();
-        LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENT_PATH))) {
-            String line;
-            String doctorID = null;
-            // Find the appointment to reschedule
-            while ((line = reader.readLine()) != null) {
-                String[] details = line.split(",");
-                if (details.length >= 4 && user.getUserID().equals(details[0]) &&
-                        LocalDateTime.parse(details[2].trim(), formatter).equals(startInitial)) {
-                    doctorID = details[1];
-                    break;
+        while(true) {
+            try{
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                Scanner sc = new Scanner(System.in);
+                //Check user's booked schedule
+                showUserSlots(user);
+                System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
+                String input = sc.nextLine().trim();
+                LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
+
+
+                BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENT_PATH));
+                String line;
+                String doctorID = null;
+                // Find the appointment to reschedule
+                while ((line = reader.readLine()) != null) {
+                    String[] details = line.split(",");
+                    if (details.length >= 4 && user.getUserID().equals(details[0]) &&
+                            LocalDateTime.parse(details[2].trim(), formatter).equals(startInitial)) {
+                        doctorID = details[1];
+                        break;
+                    }
                 }
-            }
 
-            if(doctorID == null){
-                System.out.println("No matching appointment found to cancel.");
+                if (doctorID == null) {
+                    System.out.println("No matching appointment found to cancel.");
+                    continue;
+                }
+
+                removeAppointmentInCSV(user.getUserID(), doctorID, startInitial);
+                System.out.println("Appointment cancelled successfully!");
                 return;
-            }
 
-            removeAppointmentInCSV(user.getUserID(), doctorID, startInitial);
-            System.out.println("Appointment cancelled successfully!");
+            } catch (Exception e) {
+                System.out.println("Invalid date time and format. Please try again");
+            }
         }
-        catch(IOException e){
-            System.err.println("Error reading schedules: " + e.getMessage());           
-        }
-        catch(Exception e){
-            System.err.println("Error processing schedule data: " + e.getMessage());            
-        }        
     }
 
     private boolean hasAppointmentConflict(String userID, LocalDateTime newStart){
