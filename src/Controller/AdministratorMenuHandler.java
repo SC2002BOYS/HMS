@@ -26,7 +26,7 @@ public class AdministratorMenuHandler implements MenuHandler {
         System.out.println("3. View and Manage Medication Inventory");
         System.out.println("4. Approve Replenishment Requests");
         System.out.println("5. Update Medical Record");
-        System.out.println("5. Log out");
+        System.out.println("6. Log out");
     }
 
     public void handleMenuOption(int choice, User user)
