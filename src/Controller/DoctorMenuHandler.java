@@ -4,6 +4,7 @@ import Model.Patient;
 import Model.User;
 import Model.Schedule;
 import View.ScheduleView;
+import View.ViewPatientRecords;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -34,6 +35,7 @@ public class DoctorMenuHandler implements MenuHandler{
         Scanner scanner = new Scanner(System.in);
         switch (choice) {
             case 1:
+                ViewPatientRecords viewPatientRecords = new ViewPatientRecords(doctor.getUserID());
 //                System.out.print("Enter Patient ID: ");
 //                String patientID = scanner.next();
 //                Patient patient = new Patient(patientID, CSVReader.getPassword("External Data/Users.csv", patientID), CSVReader.getGender("External Data/Users.csv", patientID), CSVReader.getAge("External Data/Users.csv", patientID), new PatientMenuHandler(new PatientScheduleHandler()));
