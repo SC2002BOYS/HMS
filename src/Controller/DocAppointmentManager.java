@@ -13,8 +13,8 @@ import java.util.Scanner;
 
 public class DocAppointmentManager {
 
-    Schedule schedule;
-    ScheduleView scheduleView;
+    private Schedule schedule;
+    private ScheduleView scheduleView;
 
     public DocAppointmentManager(Schedule schedule){
         this.schedule = schedule;
