@@ -18,6 +18,8 @@ import Type.Role;
 import View.AdministratorMenu;
 import View.HospitalStaffMenu;
 import Controller.MenuHandler;
+
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Administrator extends User{
@@ -44,22 +46,26 @@ public class Administrator extends User{
    
         public void runModule()
         {
-                boolean exit = false;
-                while(!exit)
-                {
-                        menuHandler.displayMenu();
-                        System.out.print("Enter your choice: ");
-                        int choice = new Scanner(System.in).nextInt();  
-                        if(choice==5)
-                        {
-                                exit = true;
-                        }
-                        else
-                        {
-                                menuHandler.handleMenuOption(choice, this);
-                        }
+            boolean exit = false;
+            Scanner scanner = new Scanner(System.in); // Create a single Scanner instance
+
+            while (!exit) {
+                menuHandler.displayMenu();
+                System.out.print("Enter your choice: ");
+
+                try {
+                    int choice = scanner.nextInt(); // Attempt to read an integer
+
+                    if (choice == 5) {
+                        exit = true; // Exit the loop if the choice is 5
+                    } else {
+                        menuHandler.handleMenuOption(choice, this); // Handle other menu options
+                    }
+                } catch (InputMismatchException e) {
+                    System.out.println("Invalid input! Please enter a valid choice.");
+                    scanner.nextLine(); // Clear the invalid input from the buffer
                 }
-                
+            }
         }
         
     }

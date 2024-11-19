@@ -47,7 +47,10 @@ public class ScheduleController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         ArrayList<Appointment> appointmentRequests = schedule.getAppointmentRequests();
         Appointment current ;
-
+        if (appointmentRequests.isEmpty()){
+            System.out.println("No available requests :) ");
+            return;
+        }
 
         while (!validInput) {
             scheduleView.viewAppointmentRequests();

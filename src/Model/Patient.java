@@ -1,5 +1,6 @@
 package Model;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Controller.CSVReader;
@@ -53,18 +54,26 @@ public class Patient extends User {
 
     public void runModule() {
         boolean exit = false;
+        Scanner scanner = new Scanner(System.in);
+
         while (!exit) {
             menuHandler.displayMenu();
             System.out.print("Enter your choice: ");
-            int choice = new Scanner(System.in).nextInt();
 
+            try {
+                int choice = scanner.nextInt(); // Read user input
 
-            if (choice == 9) {
-                exit = true;
-            } else {
-                menuHandler.handleMenuOption(choice, this);
+                if (choice == 9) {
+                    exit = true; // Exit condition
+                } else {
+                    menuHandler.handleMenuOption(choice, this); // Handle other options
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input! Please enter a valid choice.");
+                scanner.nextLine(); // Clear the invalid input
             }
         }
     }
+
 
 }
