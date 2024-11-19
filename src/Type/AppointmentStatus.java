@@ -1,7 +1,7 @@
 package Type;
 
 public enum AppointmentStatus {
-    ACCEPTED,
-    DECLINED,
+    CONFIRMED,
+    CANCELLED,
     PENDING
 }

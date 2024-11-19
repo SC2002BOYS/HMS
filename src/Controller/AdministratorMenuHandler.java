@@ -1,30 +1,17 @@
 package Controller;
 import java.util.*;
-
-import Model.Administrator;
-import Model.Patient;
-import java.time.LocalDate;
-import Controller.CSVReader;
 import Model.User;
-import Type.Role;
-import Controller.MenuHandler;
-import View.Menu;
+import View.*;
+
 
 public class AdministratorMenuHandler implements MenuHandler {
 
-    private final IReplenishmentController replenishmentController;
-    private final IAppointmentController appointmentController;
-    private final IStaffController staffController;
     private final Menu HospitalStaffMenu;
 
     //constructor
-    public AdministratorMenuHandler(IReplenishmentController replenishmentController,IAppointmentController appointmentController,IStaffController staffController, Menu HospitalStaffMenu)
+    public AdministratorMenuHandler(Menu HospitalStaffMenu)
     {
-        this.replenishmentController = replenishmentController;
-        this.appointmentController = appointmentController;
-        this.staffController = staffController;
         this.HospitalStaffMenu = HospitalStaffMenu;
-
     }
 
 
@@ -42,6 +29,10 @@ public class AdministratorMenuHandler implements MenuHandler {
     public void handleMenuOption(int choice, User user)
     {
         Scanner scanner = new Scanner(System.in);
+        IStaffController staffController = new StaffController();
+        IAppointmentController appointmentController = new AppointmentController();
+        ReplenishmentController replenishmentController = new ReplenishmentController();
+        Menu pendingMenu = new PendingMenu();
         switch(choice)
         {
             case 1:
@@ -52,21 +43,24 @@ public class AdministratorMenuHandler implements MenuHandler {
                     int staffChoice = scanner.nextInt();
                     switch (staffChoice) {
                         case 1:staffController.viewHospitalStaff();
+                            System.out.println();
                             break;
 
                         case 2:staffController.addStaffMember();
+                            System.out.println();
                             break;
 
                         case 3:staffController.updateStaffMember();
+                            System.out.println();
                             break;
 
                         case 4:staffController.removeStaffMember();
+                            System.out.println();
                             break;
 
                         case 5:
-
                             break;
-                    
+
                         default:
                             System.out.println("Invalid option. Please try again.");
                             continue;
@@ -78,13 +72,49 @@ public class AdministratorMenuHandler implements MenuHandler {
                 break;
             case 2:
                 appointmentController.viewAppointmentsDetails();
+                System.out.println();
                 break;
 
             case 3:
-                replenishmentController.approveReplenishmentRequest();
+            while (true) {
+                Menu mediciMenu = new MedicineInventoryMenu();
+                mediciMenu.printMenu();
+                System.out.print("Enter your choice: ");
+                int Choice = scanner.nextInt();
+                switch (Choice) {
+                    case 1:
+                        PrescriptionHandler prescriptionHandler = new PrescriptionServiceHandler();
+                        prescriptionHandler.viewInventory();
+                        System.out.println();
+                        break;
+                    case 2:
+                        Scanner sc = new Scanner(System.in);
+                        System.out.println("Enter the medication name:");
+                        String medicationName = sc.next();
+                        IAdminUpdateInven adminUpdate = new AdminUpdateInven(medicationName);
+                        adminUpdate.updateInventory();
+                        System.out.println();
+                        break;
+                    case 3:
+                        break; // Break out of the inner switch case
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                        continue;
+                }
+                if (Choice == 3) {
+                    break; // Break out of the while loop
+                }
+            }
+            break;
+
+            case 4:
+
+                if (replenishmentController.printPendingRequests()) {
+                    replenishmentController.approveReplenishmentRequest();
+                }
+                System.out.println();
                 break;
 
-                
             default:
                 System.out.println("Invalid option. Please try again.");
                

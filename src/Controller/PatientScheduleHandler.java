@@ -14,6 +14,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
 
     @Override
     public void scheduleAppointment(User user){
+
         while(true) {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             Scanner sc = new Scanner(System.in);
@@ -89,6 +90,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                     continue;
                 }
 
+
                 LocalDateTime newStart = null;
                 LocalDateTime newEnd = null;
                 // Select time slot
@@ -128,12 +130,14 @@ public class PatientScheduleHandler implements AppointmentHandler{
                 }
             } catch(Exception e){
                 System.out.println("Invalid date time and format. Please try again");
+
             }
         }
     }
 
     @Override
     public void cancelAppointment(User user){
+
         while(true) {
             try{
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -143,6 +147,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
                 System.out.print("Pick the timeslot to change (format: yyyy-MM-dd HH:mm): ");
                 String input = sc.nextLine().trim();
                 LocalDateTime startInitial = LocalDateTime.parse(input, formatter);
+
 
                 BufferedReader reader = new BufferedReader(new FileReader(APPOINTMENT_PATH));
                 String line;
@@ -300,7 +305,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
             System.out.println("----------------");
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                if (details.length >= 2 && "DOCTOR".equalsIgnoreCase(details[1].trim())) {
+                if (details.length >= 2 && "DOCTOR".equalsIgnoreCase(details[2].trim())) {
                     System.out.println("Doctor " + details[0]);
                     System.out.println("----------------");
                     System.out.println();
@@ -389,7 +394,7 @@ public class PatientScheduleHandler implements AppointmentHandler{
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] details = line.split(",");
-                if (details[0].equals(doctorID) && "DOCTOR".equalsIgnoreCase(details[1].trim())) {
+                if (details[0].equals(doctorID) && "DOCTOR".equalsIgnoreCase(details[2].trim())) {
                     return true;
                 }
             }

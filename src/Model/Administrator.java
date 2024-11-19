@@ -17,14 +17,7 @@ import Type.Gender;
 import Type.Role;
 import View.AdministratorMenu;
 import View.HospitalStaffMenu;
-import Controller.StaffController;
-import Controller.AppointmentController;
-import Controller.IAppointmentController;
-import Controller.IReplenishmentController;
-import Controller.IStaffController;
-import Controller.InventoryController;
 import Controller.MenuHandler;
-import Controller.ReplenishmentController;
 import java.util.Scanner;
 
 public class Administrator extends User{
@@ -65,8 +58,7 @@ public class Administrator extends User{
                         {
                                 menuHandler.handleMenuOption(choice, this);
                         }
-                }
-                
+                }       
         }
         
     }

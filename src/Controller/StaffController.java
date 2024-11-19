@@ -8,8 +8,8 @@ import java.util.List;
 public class StaffController implements IStaffController {
     // Method to view hospital staff
     // need to chnage logic, this is just a placeholder
-    private static final String CSV_FILE_PATH = "HMS/External Data/Staff_List.csv";
-    private static final String USERS_CSV_FILE_PATH = "HMS/External Data/Users.csv";
+    private static final String CSV_FILE_PATH = "External Data/Staff_List.csv";
+    private static final String USERS_CSV_FILE_PATH = "External Data/Users.csv";
 
     public void viewHospitalStaff() {
         System.out.println("Viewing hospital staff...");
@@ -40,7 +40,7 @@ public class StaffController implements IStaffController {
         System.out.println("Enter the age:");
         String age = sc.next();
 
-        String StaffcsvLine = name + "," + role + "," + gender + "," + password + "," + age;
+        String StaffcsvLine = name + "," + password + "," + role + "," + gender + "," + age;
         String UsercsvLine = name + "," + password + "," + role + "," + gender + "," + age;
 
         // Write the CSV line to the STAFF_List.csv file
@@ -86,8 +86,8 @@ public class StaffController implements IStaffController {
             System.out.println("Enter the new age:");
             String age = sc.next();
 
-            updateLineInFile(CSV_FILE_PATH, staffID, role, password, gender, age);
-            updateLineInFile(USERS_CSV_FILE_PATH, staffID, role, password, gender, age);
+            updateLineInFile(CSV_FILE_PATH, staffID, password, role, gender, age);
+            updateLineInFile(USERS_CSV_FILE_PATH, staffID, password, role, gender, age);
 
             System.out.println("Staff member updated.");
         } else {
@@ -165,7 +165,7 @@ public class StaffController implements IStaffController {
         return found;
     }
 
-    private void updateLineInFile(String filePath, String staffID, String role, String password, String gender, String age) {
+    private void updateLineInFile(String filePath, String staffID, String password, String role, String gender, String age) {
         List<String> lines = new ArrayList<>();
 
         // Read the existing CSV file
@@ -175,7 +175,7 @@ public class StaffController implements IStaffController {
                 String[] values = line.split(",");
                 if (values[0].equals(staffID)) {
                     // Update the staff member's information
-                    line = staffID + "," + role + "," + gender + "," + password + "," + age;
+                    line = staffID + "," + password + "," + role + "," + gender + "," + age;
                 }
                 lines.add(line);
             }
