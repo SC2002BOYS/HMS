@@ -132,8 +132,7 @@ public class AdministratorMenuHandler implements MenuHandler {
                 break;
             case 5:
                 System.out.println("Enter the patient to De-active");
-                Scanner s = new Scanner(System.in);
-                String patientID = s.next();
+                String patientID = scanner.next();
                 MedicalRecord record = CSVReader.findMedicalRecordByPatientID("External Data/MedicalRecord.csv", patientID);
                 IUpdate adminUpdate = new AdminUpdateMed();
                 UpdateController controller = new UpdateController();
