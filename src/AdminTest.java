@@ -15,12 +15,8 @@ public class AdminTest {
     
     public static void main(String[] args) {
         System.out.println("This is a test for the Admin class");
-
-         IStaffController staffController= new StaffController();
-                IAppointmentController appointmentController = new AppointmentController();
-                IReplenishmentController replenishmentController = new ReplenishmentController();
-                Menu hospitalStaffMenu = new HospitalStaffMenu();
-                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(replenishmentController,appointmentController,staffController,hospitalStaffMenu);
+            Menu hospitalStaffMenu = new HospitalStaffMenu();
+                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(hospitalStaffMenu);
                 Administrator admin = new Administrator("shawn", "chow", Gender.MALE, "55", adminMenuHandler);
                 admin.runModule();
     }
