@@ -39,6 +39,7 @@ public class PatientMenuHandler implements MenuHandler{
                 System.out.println("Medical Record of " + user.getUserID());
                 ViewMedicalRecord viewRecord = new ViewMedicalRecord();
                 viewRecord.displayRecord(patient.getMedicalRecord());
+                System.out.println();
                 break;
 
             case 2:
@@ -49,26 +50,32 @@ public class PatientMenuHandler implements MenuHandler{
                 int newNumber = sc.nextInt();
                 IUpdate patientUpdate = new PatientUpdate(newEmail, newNumber);
                 updateController.update(patientUpdate, patient.getMedicalRecord());
+                System.out.println();
                 break;
 
             case 3:
                 appointmentHandler.scheduleAppointment(user);
+                System.out.println();
                 break;
             case 4:
                 appointmentHandler.rescheduleAppointment(user);
+                System.out.println();
                 break;
             case 5:
                 appointmentHandler.cancelAppointment(user);
+                System.out.println();
                 break;
 
             case 6:
                 ViewPatientAppt viewPatientAppt = new ViewPatientAppt();
                 viewPatientAppt.view(user.getUserID());
+                System.out.println();
                 break;
 
             case 7:
                 ViewPastApptOutcome viewPast = new ViewPastApptOutcome();
                 viewPast.view(user.getUserID());
+                System.out.println();
                 break;
 
 
@@ -76,6 +83,7 @@ public class PatientMenuHandler implements MenuHandler{
                 System.out.print("Enter new password: ");
                 String newPass = sc.nextLine();
                 PasswordController passChanger = new PasswordController(user.getUserID(), newPass);
+                System.out.println();
                 break;
 
             default:

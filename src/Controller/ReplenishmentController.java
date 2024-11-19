@@ -17,6 +17,29 @@ import java.util.Scanner;
 public class ReplenishmentController implements IReplenishmentController {
 
     private static final String CSV_FILE_PATH = "External Data/ReplenishRequest.csv";
+
+    public boolean printPendingRequests() {
+        boolean hasPending = false;
+        try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] values = line.split(",");
+                if (values.length >= 3 && values[2].equalsIgnoreCase("PENDING")) {
+                    System.out.println(line);
+                    hasPending = true;
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("An error occurred while reading the CSV file: " + e.getMessage());
+        }
+
+        if (!hasPending) {
+            System.out.println("No current replenish requests.");
+        }
+        return hasPending;
+    }
+
+
     public void approveReplenishmentRequest() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the date of the replenishment request (YYYY-MM-DD):");
@@ -28,6 +51,7 @@ public class ReplenishmentController implements IReplenishmentController {
         List<String> lines = new ArrayList<>();
         boolean found = false;
 
+        // Read the existing CSV file
         try (BufferedReader reader = new BufferedReader(new FileReader(CSV_FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -42,21 +66,30 @@ public class ReplenishmentController implements IReplenishmentController {
             System.err.println("An error occurred while reading the CSV file: " + e.getMessage());
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
-            for (String line : lines) {
-                writer.write(line);
-                writer.newLine();
+                // Write the updated content back to the CSV file
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(CSV_FILE_PATH))) {
+                    for (String line : lines) {
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                } catch (IOException e) {
+                    System.err.println("An error occurred while writing to the CSV file: " + e.getMessage());
+                }
+        
+                if (found) {
+                    System.out.println("Replenishment request approved.");
+                } else {
+                    System.out.println("Replenishment request not found or already approved.");
+                }
             }
-        } catch (IOException e) {
-            System.err.println("An error occurred while writing to the CSV file: " + e.getMessage());
-        }
+        
+            public static void main(String[] args) {
+                ReplenishmentController controller = new ReplenishmentController();
+                if (controller.printPendingRequests()) {
+                    controller.approveReplenishmentRequest();
+                }
+            }
 
-        if (found) {
-            System.out.println("Replenishment request approved.");
-        } else {
-            System.out.println("Replenishment request not found or already approved.");
-        }
-
-      
-    }
+    
+    
 }

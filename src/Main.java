@@ -97,11 +97,8 @@ public class Main {
 
             
             case ADMIN:
-                IStaffController staffController= new StaffController();
-                IAppointmentController appointmentController = new AppointmentController();
-                IReplenishmentController replenishmentController = new ReplenishmentController();
                 Menu hospitalStaffMenu = new HospitalStaffMenu();
-                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(replenishmentController,appointmentController,staffController,hospitalStaffMenu);
+                AdministratorMenuHandler adminMenuHandler = new AdministratorMenuHandler(hospitalStaffMenu);
                 Administrator admin = new Administrator(userID, CSVReader.getPassword("External Data/Users.csv", userID), CSVReader.getGender("External Data/Users.csv", userID), CSVReader.getAge("External Data/Users.csv", userID), adminMenuHandler);
                 admin.runModule();
                 break;
