@@ -213,7 +213,7 @@ public class StaffController implements IStaffController {
                         line = staffID + "," + newPassword + "," + role + "," + values[3] + "," + values[4] + "," + values[5];
                     }
                     updated = true;
-                    System.out.println(line); // Debugging statement
+
                 }
                 lines.add(line);
             }
